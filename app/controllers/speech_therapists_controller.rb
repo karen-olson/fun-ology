@@ -1,0 +1,2 @@
+class SpeechTherapistsController < ApplicationController
+end
