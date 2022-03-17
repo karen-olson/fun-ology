@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :students
+  resources :speech_therapists
   resources :test_data
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
