@@ -1,0 +1,2 @@
+class SpeechTherapist < User
+end
