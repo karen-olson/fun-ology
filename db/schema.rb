@@ -10,38 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_17_180930) do
+ActiveRecord::Schema.define(version: 2022_03_18_194412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "speech_therapists", force: :cascade do |t|
-    t.string "full_name"
-    t.string "email"
-    t.string "username"
-    t.string "password_digest"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "students", force: :cascade do |t|
-    t.string "full_name"
-    t.datetime "date_of_birth"
-    t.integer "grade"
-    t.string "email"
-    t.string "username"
-    t.string "password_digest"
-    t.bigint "speech_therapist_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["speech_therapist_id"], name: "index_students_on_speech_therapist_id"
-  end
-
-  create_table "test_data", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  add_foreign_key "students", "speech_therapists"
 end

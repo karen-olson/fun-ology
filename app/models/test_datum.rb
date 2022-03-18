@@ -1,2 +1,0 @@
-class TestDatum < ApplicationRecord
-end

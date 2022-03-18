@@ -1,2 +1,0 @@
-class SpeechTherapistsController < ApplicationController
-end
