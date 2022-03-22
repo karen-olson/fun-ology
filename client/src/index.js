@@ -4,11 +4,18 @@ import "./index.css";
 import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { theme } from "./theme.tsx";
+import { ThemeProvider } from "@emotion/react";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </BrowserRouter>,
   document.getElementById("root")
 );
 
