@@ -1,18 +1,21 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import FunologyLogoLarge from "../FunologyLogoLarge.png";
 
 const FunologyHeader = () => {
   return (
     <Box
       sx={{
         paddingTop: 4,
+        paddingBottom: 0,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <Typography fontFamily="monospace" fontSize="70px" color="primary.main">
-        Fun-ology
-      </Typography>
+      <img
+        src={FunologyLogoLarge}
+        alt="Funology Logo - red, green, and blue stacked blocks with shapes in them."
+      />
     </Box>
   );
 };
