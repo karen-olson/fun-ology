@@ -7,6 +7,7 @@ import LoginForm from "./pages/LoginForm";
 import StudentSignUpForm from "./pages/StudentSignUpForm";
 import SpeechTherapistSignUpForm from "./pages/SpeechTherapistSignUpForm";
 import SignUpPage from "./pages/SignUpPage";
+import SignUpConfirmation from "./pages/SignUpConfirmation";
 
 export default function App() {
   // Using a query hook automatically fetches data and returns query values
@@ -29,6 +30,7 @@ export default function App() {
           element={<SpeechTherapistSignUpForm />}
         />
         <Route path="signup/student" element={<StudentSignUpForm />} />
+        <Route path="signup/confirmation" element={<SignUpConfirmation />} />
       </Routes>
 
       {/* {error ? (
