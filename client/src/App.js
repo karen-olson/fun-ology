@@ -1,5 +1,12 @@
 import * as React from "react";
 import { useGetTestDataQuery } from "./services/phonology";
+import { Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import LoginForm from "./pages/LoginForm";
+import StudentSignUpForm from "./pages/StudentSignUpForm";
+import SpeechTherapistSignUpForm from "./pages/SpeechTherapistSignUpForm";
+import SignUpPage from "./pages/SignUpPage";
 
 export default function App() {
   // Using a query hook automatically fetches data and returns query values
@@ -13,16 +20,24 @@ export default function App() {
 
   return (
     <div className="App">
-      {error ? (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="login" element={<LoginForm />} />
+        <Route path="signup" element={<SignUpPage />} />
+        <Route
+          path="signup/speech-therapist"
+          element={<SpeechTherapistSignUpForm />}
+        />
+        <Route path="signup/student" element={<StudentSignUpForm />} />
+      </Routes>
+
+      {/* {error ? (
         <>Oh no, there was an error</>
       ) : isLoading ? (
         <>Loading...</>
       ) : data ? (
-        <>
           <h3>{data}</h3>
-          {/* <img src={data.sprites.front_shiny} alt={data.species.name} /> */}
-        </>
-      ) : null}
+      ) : null} */}
     </div>
   );
 }
