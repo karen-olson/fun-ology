@@ -1,3 +1,3 @@
 class SpeechTherapistSerializer < User
-  attributes :id
+  # attributes :id
 end

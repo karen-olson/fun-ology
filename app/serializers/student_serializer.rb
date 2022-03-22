@@ -1,3 +1,3 @@
 class StudentSerializer < User
-  attributes :id
+  # attributes :id
 end
