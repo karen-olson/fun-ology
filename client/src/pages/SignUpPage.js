@@ -20,17 +20,37 @@ const SignUpPage = () => {
           alignItems: "center",
         }}
       >
-        <Typography>I am a...</Typography>
+        <Typography
+          component="h1"
+          variant="h4"
+          color="primary.dark"
+          fontFamily="monospace"
+        >
+          Create an Account
+        </Typography>
+        <Typography
+          fontFamily="monospace"
+          fontSize="x-large"
+          color="primary.dark"
+          sx={{ mt: 4 }}
+        >
+          I am a...
+        </Typography>
         <Button
           variant="contained"
           name="speech-therapist"
           onClick={handleRoleClick}
-          sx={{ margin: 2 }}
+          sx={{ margin: 2, backgroundColor: "secondary.main" }}
         >
           Speech Therapist
         </Button>
-        <Button variant="contained" name="student" onClick={handleRoleClick}>
-          Student{" "}
+        <Button
+          variant="contained"
+          name="student"
+          onClick={handleRoleClick}
+          sx={{ backgroundColor: "secondary.main" }}
+        >
+          Student
         </Button>
       </Box>
     </Container>
