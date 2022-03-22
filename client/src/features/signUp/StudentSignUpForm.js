@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
-import FunologyHeader from "../Components/FunologyHeader";
+import FunologyHeader from "../components/FunologyHeader";
 
 const defaultFormData = {
   role: "",

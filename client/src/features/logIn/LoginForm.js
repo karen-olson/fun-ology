@@ -1,12 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
-import { TextField } from "@mui/material";
-import { Grid } from "@mui/material";
-import { Box } from "@mui/material";
-import { Typography } from "@mui/material";
-import { Container } from "@mui/material";
-import FunologyHeader from "../Components/FunologyHeader";
+import {
+  Container,
+  Box,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+} from "@mui/material";
+import FunologyHeader from "../../components/FunologyHeader";
 
 const defaultFormData = {
   username: "",

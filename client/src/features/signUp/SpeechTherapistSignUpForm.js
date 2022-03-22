@@ -8,7 +8,7 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import FunologyHeader from "../Components/FunologyHeader";
+import FunologyHeader from "../components/FunologyHeader";
 
 const defaultFormData = {
   role: "",

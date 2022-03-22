@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FunologyLogoLarge from "../FunologyLogoLarge.png";
 import { Container, Box, Typography, Button } from "@mui/material";
 

@@ -1,4 +1,4 @@
-import FunologyHeader from "../Components/FunologyHeader";
+import FunologyHeader from "../components/FunologyHeader";
 import { Button, Typography, Container, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 

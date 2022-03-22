@@ -1,6 +1,6 @@
 import { Container, Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import FunologyHeader from "../Components/FunologyHeader";
+import FunologyHeader from "../../components/FunologyHeader";
 
 const SignUpConfirmation = () => {
   return (
