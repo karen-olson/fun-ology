@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -8,22 +8,25 @@ import {
   Typography,
   Container,
 } from "@mui/material";
-import FunologyHeader from "../components/FunologyHeader";
+import FunologyHeader from "../../components/FunologyHeader";
+import { useCreateNewSpeechTherapistMutation } from "../../services/phonology";
 
 const defaultFormData = {
-  role: "",
-  fullName: "",
-  dateOfBirth: null,
+  full_name: "",
   username: "",
   email: "",
   password: "",
-  passwordConfirmation: "",
-  speechTherapistId: null,
+  password_confirmation: "",
 };
 
 const SpeechTherapistSignUpForm = ({ createUser }) => {
   const [formData, setFormData] = useState(defaultFormData);
   // const [errors, setErrors] = useState(null);
+
+  const [createNewSpeechTherapist, { isLoading }] =
+    useCreateNewSpeechTherapistMutation();
+
+  const navigate = useNavigate();
 
   function handleChange(event) {
     const updatedFormData = {
@@ -37,10 +40,11 @@ const SpeechTherapistSignUpForm = ({ createUser }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // access RTK query POST method here?
-    // Use>....CreateSpeechTherapist(......);
+    createNewSpeechTherapist(formData);
 
     setFormData(defaultFormData);
+
+    navigate("/signup/confirmation");
   }
 
   return (
@@ -64,27 +68,13 @@ const SpeechTherapistSignUpForm = ({ createUser }) => {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
-              <InputLabel id="role-label">I am a...</InputLabel>
-              <Select
-                labelid="role-label"
-                id="role"
-                name="role"
-                onChange={handleChange}
-                value={formData["role"]}
-                fullWidth
-              >
-                <MenuItem value="SpeechTherapist">Speech Therapist</MenuItem>
-                <MenuItem value="Student">Student</MenuItem>
-              </Select>
-            </Grid> */}
             <Grid item xs={12}>
               <TextField
-                id="fullName"
-                name="fullName"
+                id="full_name"
+                name="full_name"
                 label="Full Name"
                 type="text"
-                value={formData["fullName"]}
+                value={formData["full_name"]}
                 onChange={handleChange}
                 fullWidth
               />
@@ -124,11 +114,11 @@ const SpeechTherapistSignUpForm = ({ createUser }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="passwordConfirmation"
-                name="passwordConfirmation"
+                id="password_confirmation"
+                name="password_confirmation"
                 label="Password Confirmation"
                 type="password"
-                value={formData["passwordConfirmation"]}
+                value={formData["password_confirmation"]}
                 onChange={handleChange}
                 fullWidth
               />
