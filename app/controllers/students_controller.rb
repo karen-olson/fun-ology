@@ -1,4 +1,6 @@
 class StudentsController < ApplicationController
+    skip_before_action :authorize, only: :create
+
 
     def create 
         student = Student.create!(student_params)
