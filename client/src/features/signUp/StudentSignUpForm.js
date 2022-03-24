@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -13,30 +13,40 @@ import {
 } from "@mui/material";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
-import FunologyHeader from "../components/FunologyHeader";
+import FunologyHeader from "../../components/FunologyHeader";
+import { useCreateNewStudentMutation } from "../../services/phonology";
+import { create } from "@mui/material/styles/createTransitions";
 
 const defaultFormData = {
-  role: "",
-  fullName: "",
-  dateOfBirth: new Date(),
+  full_name: "",
+  date_of_birth: new Date(),
   username: "",
   email: "",
   password: "",
-  passwordConfirmation: "",
-  speechTherapistId: "",
+  password_confirmation: "",
+  speech_therapist_id: "",
 };
 
 const StudentSignUpForm = ({ createUser }) => {
   const [formData, setFormData] = useState(defaultFormData);
   // const [errors, setErrors] = useState(null);
 
+  const [createNewStudent, { isLoading }] = useCreateNewStudentMutation();
+
+  const navigate = useNavigate();
+
   function handleChange(event) {
     let updatedFormData;
 
-    if (event.target === undefined) {
+    if (event === null) {
       updatedFormData = {
         ...formData,
-        dateOfBirth: event,
+        date_of_birth: "",
+      };
+    } else if (event.target === undefined) {
+      updatedFormData = {
+        ...formData,
+        date_of_birth: event,
       };
     } else {
       updatedFormData = {
@@ -51,15 +61,19 @@ const StudentSignUpForm = ({ createUser }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // access RTK query POST method here?
-    // User....CreateStudentUser(formData);
+    createNewStudent(formData);
 
     setFormData(defaultFormData);
+
+    navigate("/signup/confirmation");
   }
 
   const speechTherapists = [
-    { id: 1, full_name: "first slp" },
-    { id: 2, full_name: "second slp" },
+    { id: 3, full_name: "first slp" },
+    { id: 6, full_name: "second slp" },
+    { id: 9, full_name: "third slp" },
+    { id: 10, full_name: "fourth slp" },
+    { id: 11, full_name: "fifth slp" },
   ];
 
   return (
@@ -83,30 +97,16 @@ const StudentSignUpForm = ({ createUser }) => {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12}>
-              <InputLabel id="role-label">I am a...</InputLabel>
-              <Select
-                labelid="role-label"
-                id="role"
-                name="role"
-                onChange={handleChange}
-                value={formData["role"]}
-                fullWidth
-              >
-                <MenuItem value="SpeechTherapist">Speech Therapist</MenuItem>
-                <MenuItem value="Student">Student</MenuItem>
-              </Select>
-            </Grid> */}
             <Grid item xs={12}>
               <InputLabel id="speech-therapist-id-label">
                 My speech teacher is...
               </InputLabel>
               <Select
                 labelid="speech-therapist-label"
-                id="speechTherapistId"
-                name="speechTherapistId"
+                id="speech_therapist_id"
+                name="speech_therapist_id"
                 onChange={handleChange}
-                value={formData["speechTherapistId"]}
+                value={formData["speech_therapist_id"]}
                 fullWidth
               >
                 <MenuItem value={speechTherapists[0].id}>
@@ -122,8 +122,8 @@ const StudentSignUpForm = ({ createUser }) => {
                 <DesktopDatePicker
                   label="Date of Birth"
                   inputFormat="MM/dd/yyyy"
-                  name="dateOfBirth"
-                  value={formData["dateOfBirth"]}
+                  name="date_of_birth"
+                  value={formData["date_of_birth"]}
                   onChange={handleChange}
                   renderInput={(params) => <TextField {...params} />}
                 />
@@ -131,11 +131,11 @@ const StudentSignUpForm = ({ createUser }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="fullName"
-                name="fullName"
+                id="full_name"
+                name="full_name"
                 label="Full Name"
                 type="text"
-                value={formData["fullName"]}
+                value={formData["full_name"]}
                 onChange={handleChange}
                 fullWidth
               />
@@ -175,11 +175,11 @@ const StudentSignUpForm = ({ createUser }) => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                id="passwordConfirmation"
-                name="passwordConfirmation"
+                id="password_confirmation"
+                name="password_confirmation"
                 label="Password Confirmation"
                 type="password"
-                value={formData["passwordConfirmation"]}
+                value={formData["password_confirmation"]}
                 onChange={handleChange}
                 fullWidth
               />
