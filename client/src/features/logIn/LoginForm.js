@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -9,19 +9,23 @@ import {
   Button,
 } from "@mui/material";
 import FunologyHeader from "../../components/FunologyHeader";
+// import { usePostLoginMutation } from "../../services/phonology";
 
 const defaultFormData = {
   username: "",
   password: "",
 };
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ setCurrentUser }) => {
   const [formData, setFormData] = useState(defaultFormData);
   const [errors, setErrors] = useState(null);
 
-  function handleChange(e) {
-    setErrors(null);
+  // const [postLogin, { isLoading, isFetching, isError, error }] =
+  //   usePostLoginMutation();
 
+  const navigate = useNavigate();
+
+  function handleChange(e) {
     const key = e.target.name;
     const value = e.target.value;
 
@@ -36,6 +40,8 @@ const LoginForm = ({ onLogin }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
+    // postLogin(formData);
+
     const configObj = {
       method: "POST",
       headers: {
@@ -46,7 +52,8 @@ const LoginForm = ({ onLogin }) => {
 
     fetch("/login", configObj).then((resp) => {
       if (resp.ok) {
-        resp.json().then((user) => onLogin(user));
+        resp.json().then((currentUser) => setCurrentUser(currentUser));
+        navigate("/students");
       } else {
         resp.json().then((err) => setErrors(err.errors));
       }
@@ -107,7 +114,7 @@ const LoginForm = ({ onLogin }) => {
           >
             Log In
           </Button>
-          <Typography sx={{ color: "orange", fontStyle: "italic" }}>
+          <Typography sx={{ color: "#d36d3a", fontStyle: "italic" }}>
             {errors}
           </Typography>
         </Box>
