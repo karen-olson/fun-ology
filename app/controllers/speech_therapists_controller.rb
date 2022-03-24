@@ -1,4 +1,5 @@
 class SpeechTherapistsController < ApplicationController
+    skip_before_action :authorize, only: :create
 
     def create 
         speech_therapist = SpeechTherapist.create!(speech_therapist_params)
@@ -8,6 +9,6 @@ class SpeechTherapistsController < ApplicationController
     end
 
     def speech_therapist_params
-        params.permit(:full_name, :username, :email, :password, :password_confirmation, :date_of_birth)
+        params.permit(:full_name, :username, :email, :password, :password_confirmation)
     end
 end
