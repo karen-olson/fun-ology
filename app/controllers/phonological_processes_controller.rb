@@ -1,0 +1,2 @@
+class PhonologicalProcessesController < ApplicationController
+end
