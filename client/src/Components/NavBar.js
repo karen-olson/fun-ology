@@ -54,7 +54,8 @@ const NavBar = ({ setCurrentUser }) => {
         <Button
           onClick={handleLogoutClick}
           variant="contained"
-          sx={{ mt: 1, mb: 2, pt: 0, pb: 0 }}
+          // sx={{ mt: 1, mb: 2, pt: 0, pb: 0 }}
+          sx={{ marginLeft: "auto", mr: "1em", mt: 1, mb: 2 }}
         >
           Log Out
         </Button>
