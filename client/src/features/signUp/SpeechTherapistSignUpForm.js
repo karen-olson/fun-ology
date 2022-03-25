@@ -21,12 +21,21 @@ const defaultFormData = {
 
 const SpeechTherapistSignUpForm = ({ createUser }) => {
   const [formData, setFormData] = useState(defaultFormData);
-  // const [errors, setErrors] = useState(null);
-
-  const [createNewSpeechTherapist, { isLoading }] =
-    useCreateNewSpeechTherapistMutation();
 
   const navigate = useNavigate();
+
+  const [createNewSpeechTherapist, { isError, error }] =
+    useCreateNewSpeechTherapistMutation();
+
+  let errorDisplay;
+
+  if (isError) {
+    errorDisplay = error.data.errors.map((error) => (
+      <Typography>{error}</Typography>
+    ));
+  } else {
+    errorDisplay = null;
+  }
 
   function handleChange(event) {
     const updatedFormData = {
@@ -40,11 +49,13 @@ const SpeechTherapistSignUpForm = ({ createUser }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    createNewSpeechTherapist(formData);
+    createNewSpeechTherapist(formData)
+      .unwrap()
+      .then(() => {
+        navigate("/signup/confirmation");
+      });
 
     setFormData(defaultFormData);
-
-    navigate("/signup/confirmation");
   }
 
   return (
@@ -132,6 +143,9 @@ const SpeechTherapistSignUpForm = ({ createUser }) => {
           >
             Sign Up
           </Button>
+          <Typography sx={{ color: "#d36d3a", fontStyle: "italic" }}>
+            {errorDisplay}
+          </Typography>
         </Box>
       </Box>
       <Box
