@@ -29,11 +29,20 @@ const defaultFormData = {
 
 const StudentSignUpForm = ({ createUser }) => {
   const [formData, setFormData] = useState(defaultFormData);
-  // const [errors, setErrors] = useState(null);
 
-  const [createNewStudent, { isLoading }] = useCreateNewStudentMutation();
+  const [createNewStudent, { isError, error }] = useCreateNewStudentMutation();
 
   const navigate = useNavigate();
+
+  let errorDisplay;
+
+  if (isError) {
+    errorDisplay = error.data.errors.map((error) => (
+      <Typography>{error}</Typography>
+    ));
+  } else {
+    errorDisplay = null;
+  }
 
   function handleChange(event) {
     let updatedFormData;
@@ -61,11 +70,11 @@ const StudentSignUpForm = ({ createUser }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    createNewStudent(formData);
+    createNewStudent(formData)
+      .unwrap()
+      .then(() => navigate("/signup/confirmation"));
 
     setFormData(defaultFormData);
-
-    navigate("/signup/confirmation");
   }
 
   const speechTherapists = [
@@ -193,6 +202,9 @@ const StudentSignUpForm = ({ createUser }) => {
           >
             Sign Up
           </Button>
+          <Typography sx={{ color: "#d36d3a", fontStyle: "italic" }}>
+            {errorDisplay}
+          </Typography>
         </Box>
       </Box>
       <Box
