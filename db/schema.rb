@@ -10,10 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_18_214815) do
+ActiveRecord::Schema.define(version: 2022_03_25_140335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "minimal_pairs", force: :cascade do |t|
+    t.string "first_word"
+    t.string "first_image_url"
+    t.string "second_word"
+    t.string "second_image_url"
+    t.bigint "target_phoneme_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["target_phoneme_id"], name: "index_minimal_pairs_on_target_phoneme_id"
+  end
+
+  create_table "phonological_processes", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "target_phonemes", force: :cascade do |t|
+    t.string "name"
+    t.bigint "phonological_process_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["phonological_process_id"], name: "index_target_phonemes_on_phonological_process_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "type"
@@ -28,5 +53,7 @@ ActiveRecord::Schema.define(version: 2022_03_18_214815) do
     t.index ["speech_therapist_id"], name: "index_users_on_speech_therapist_id"
   end
 
+  add_foreign_key "minimal_pairs", "target_phonemes"
+  add_foreign_key "target_phonemes", "phonological_processes"
   add_foreign_key "users", "users", column: "speech_therapist_id"
 end
