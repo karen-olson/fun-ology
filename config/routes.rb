@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :minimal_pairs
+  resources :target_phonemes
+  resources :phonological_processes
   post "/signup/speech_therapist", to: "speech_therapists#create"
   post "/signup/student", to: "students#create"
   get "/me", to: "users#show"
