@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Box, Tabs, Tab, Button } from "@mui/material";
-import FunologyLogoLarge from "./FunologyLogoLarge.png";
+import FunologyLogoLarge from "../FunologyLogoLarge.png";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = ({ setCurrentUser }) => {
@@ -11,6 +11,8 @@ const NavBar = ({ setCurrentUser }) => {
       if (resp.ok) {
         setCurrentUser(null);
         navigate("/");
+      } else {
+        setCurrentUser(null);
       }
     });
   }
