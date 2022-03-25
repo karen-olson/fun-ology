@@ -6,7 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-puts "Seeding data"
+puts "🌱 Seeding data... 🌱"
+
+SpeechTherapist.destroy_all
+Student.destroy_all
+PhonologicalProcess.destroy_all
+TargetPhoneme.destroy_all
+
 
 ms_olson = SpeechTherapist.create(
     full_name: "Karen Olson",
@@ -27,7 +33,6 @@ ms_omalley = SpeechTherapist.create(
 steve = Student.create(
     full_name: "Steve Jobs",
     date_of_birth: DateTime.strptime('03.17.2009', '%m.%d.%Y'),
-    grade: 8,
     email: "steve@gmail.com",
     username: "steve_jobs",
     password: "password",
@@ -38,7 +43,6 @@ steve = Student.create(
 elon = Student.create(
     full_name: "Elon Musk",
     date_of_birth: DateTime.strptime('11.18.2016', '%m.%d.%Y'),
-    grade: 1,
     email: "elon@gmail.com",
     username: "elon_musk",
     password: "password",
@@ -46,4 +50,21 @@ elon = Student.create(
     speech_therapist_id: ms_omalley.id
 )
 
-puts "Done seeding"
+fcd = PhonologicalProcess.create(name: "Final Consonant Deletion")
+s_cluster_reduction = PhonologicalProcess.create(name: "S Cluster Reduction")
+fronting = PhonologicalProcess.create(name: "Fronting")
+
+fcd_p = fcd.target_phonemes.create(name: "p")
+fcd_t = fcd.target_phonemes.create(name: "t")
+fcd_k = fcd.target_phonemes.create(name: "k")
+
+s_cluster_reduction_sp = s_cluster_reduction.target_phonemes.create(name: "sp")
+s_cluster_reduction_sn = s_cluster_reduction.target_phonemes.create(name: "sn")
+s_cluster_reduction_st = s_cluster_reduction.target_phonemes.create(name: "st")
+s_cluster_reduction_sk = s_cluster_reduction.target_phonemes.create(name: "sk")
+
+fronting_k = fronting.target_phonemes.create(name: "k")
+fronting_g = fronting.target_phonemes.create(name: "g")
+fronting_sh = fronting.target_phonemes.create(name: "sh")
+
+puts "🌻 Done seeding 🌻"
