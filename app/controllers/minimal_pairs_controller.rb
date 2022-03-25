@@ -1,0 +1,2 @@
+class MinimalPairsController < ApplicationController
+end
