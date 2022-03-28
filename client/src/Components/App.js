@@ -11,6 +11,7 @@ import SignUpConfirmation from "../features/signUp/SignUpConfirmation";
 import StudentsList from "../features/student/StudentsList";
 import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
 import PhonemesList from "../features/phonemes/PhonemesList";
+import PhonemePage from "../features/phonemes/PhonemePage";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -59,6 +60,10 @@ export default function App() {
           <Route
             path="/:phonological_process_name/phonemes"
             element={<PhonemesList />}
+          />
+          <Route
+            path="/:phonological_process_name/phonemes/:phoneme"
+            element={<PhonemePage />}
           />
         </Routes>
       </>
