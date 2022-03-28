@@ -1,27 +1,34 @@
 import PhonologicalProcessCard from "./PhonologicalProcessCard";
+import Error from "../../components/Error";
+import Loading from "../../components/Loading";
 import { useGetPhonologicalProcessesQuery } from "../../services/phonology";
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box } from "@mui/material";
 
 const PhonologicalProcessList = () => {
   const {
     data: phonologicalProcesses,
     isLoading,
-    isSuccess,
     isError,
     error,
   } = useGetPhonologicalProcessesQuery();
 
+  console.log(phonologicalProcesses);
+
   let content;
 
   if (isLoading) {
-    content = <h1>Loading</h1>;
+    content = () => {
+      return <Loading />;
+    };
   } else if (isError) {
-    content = <h1>Something went wrong...</h1>;
-    console.log(error);
+    content = <Error error={error} />;
   } else {
     const phonologicalProcessCards = phonologicalProcesses.map(
       (phonologicalProcess) => (
-        <PhonologicalProcessCard phonologicalProcess={phonologicalProcess} />
+        <PhonologicalProcessCard
+          phonologicalProcess={phonologicalProcess}
+          key={phonologicalProcess.id}
+        />
       )
     );
     content = phonologicalProcessCards;
