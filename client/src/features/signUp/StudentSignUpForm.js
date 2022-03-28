@@ -15,7 +15,6 @@ import DateAdapter from "@mui/lab/AdapterDateFns";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
 import FunologyHeader from "../../components/FunologyHeader";
 import { useCreateNewStudentMutation } from "../../services/phonology";
-import { create } from "@mui/material/styles/createTransitions";
 
 const defaultFormData = {
   full_name: "",
@@ -27,7 +26,7 @@ const defaultFormData = {
   speech_therapist_id: "",
 };
 
-const StudentSignUpForm = ({ createUser }) => {
+const StudentSignUpForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
 
   const [createNewStudent, { isError, error }] = useCreateNewStudentMutation();
@@ -77,12 +76,11 @@ const StudentSignUpForm = ({ createUser }) => {
     setFormData(defaultFormData);
   }
 
+  // Change this when changing SLP ids by reseeding the database
   const speechTherapists = [
-    { id: 3, full_name: "first slp" },
-    { id: 6, full_name: "second slp" },
-    { id: 9, full_name: "third slp" },
-    { id: 10, full_name: "fourth slp" },
-    { id: 11, full_name: "fifth slp" },
+    { id: 51, full_name: "first slp" },
+    { id: 52, full_name: "second slp" },
+    { id: 56, full_name: "third slp" },
   ];
 
   return (
