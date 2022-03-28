@@ -38,6 +38,9 @@ export const phonologyApi = createApi({
         body: newStudent,
       }),
     }),
+    getPhonologicalProcesses: builder.query({
+      query: () => "/phonological_processes",
+    }),
     // getSpeechTherapists: builder.query({
 
     // })
@@ -65,4 +68,5 @@ export const {
   usePostLoginMutation,
   useCreateNewSpeechTherapistMutation,
   useCreateNewStudentMutation,
+  useGetPhonologicalProcessesQuery,
 } = phonologyApi;
