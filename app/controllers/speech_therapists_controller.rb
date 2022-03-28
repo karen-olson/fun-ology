@@ -8,6 +8,13 @@ class SpeechTherapistsController < ApplicationController
         render json: speech_therapist, status: :created
     end
 
+    def index
+        speech_therapists = SpeechTherapist.all 
+        render json: speech_therapists 
+    end
+
+    private
+
     def speech_therapist_params
         params.permit(:full_name, :username, :email, :password, :password_confirmation)
     end
