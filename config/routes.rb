@@ -1,12 +1,12 @@
 Rails.application.routes.draw do
-  resources :minimal_pairs
-  resources :target_phonemes
-  resources :phonological_processes
   post "/signup/speech_therapist", to: "speech_therapists#create"
   post "/signup/student", to: "students#create"
   get "/me", to: "users#show"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
+  resources :minimal_pairs, only: :index
+  resources :target_phonemes, only: :index
+  resources :phonological_processes, only: :index
   resources :students
   resources :speech_therapists
   resources :users
