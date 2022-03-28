@@ -9,6 +9,8 @@ import SpeechTherapistSignUpForm from "../features/signUp/SpeechTherapistSignUpF
 import SignUpPage from "../features/signUp/SignUpPage";
 import SignUpConfirmation from "../features/signUp/SignUpConfirmation";
 import StudentsList from "../features/student/StudentsList";
+import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
+import PhonemesList from "../features/phonemes/PhonemesList";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -36,7 +38,7 @@ export default function App() {
           />
           <Route path="signup" element={<SignUpPage />} />
           <Route
-            path="signup/speech-therapist"
+            path="signup/speech_therapist"
             element={<SpeechTherapistSignUpForm />}
           />
           <Route path="signup/student" element={<StudentSignUpForm />} />
@@ -50,6 +52,14 @@ export default function App() {
         <NavBar setCurrentUser={setCurrentUser} />
         <Routes>
           <Route path="students" element={<StudentsList />} />
+          <Route
+            path="phonological_processes"
+            element={<PhonologicalProcessList />}
+          />
+          <Route
+            path="/:phonological_process_name/phonemes"
+            element={<PhonemesList />}
+          />
         </Routes>
       </>
     );
