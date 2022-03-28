@@ -38,7 +38,7 @@ const SignUpPage = () => {
         </Typography>
         <Button
           variant="contained"
-          name="speech-therapist"
+          name="speech_therapist"
           onClick={handleRoleClick}
           sx={{ margin: 2, backgroundColor: "secondary.main" }}
         >
