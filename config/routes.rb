@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get "/me", to: "users#show"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
+  resources :avatars, only: :index
   resources :minimal_pairs, only: :index
   resources :target_phonemes, only: :index
   resources :phonological_processes, only: :index
