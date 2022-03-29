@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_25_140335) do
+ActiveRecord::Schema.define(version: 2022_03_29_224737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "avatars", force: :cascade do |t|
+    t.string "name"
+    t.string "image_url"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "minimal_pairs", force: :cascade do |t|
     t.string "first_word"
@@ -50,10 +57,13 @@ ActiveRecord::Schema.define(version: 2022_03_25_140335) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "speech_therapist_id"
     t.datetime "date_of_birth"
+    t.bigint "avatar_id"
+    t.index ["avatar_id"], name: "index_users_on_avatar_id"
     t.index ["speech_therapist_id"], name: "index_users_on_speech_therapist_id"
   end
 
   add_foreign_key "minimal_pairs", "target_phonemes"
   add_foreign_key "target_phonemes", "phonological_processes"
+  add_foreign_key "users", "avatars"
   add_foreign_key "users", "users", column: "speech_therapist_id"
 end
