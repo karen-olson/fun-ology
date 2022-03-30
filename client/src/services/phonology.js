@@ -24,6 +24,9 @@ export const phonologyApi = createApi({
       // example:
       // invalidatesTags: (result, error, arg) => [{type: 'User Info', id: arg.id}|]
     }),
+    getSpeechTherapists: builder.query({
+      query: () => "/speech_therapists",
+    }),
     createNewSpeechTherapist: builder.mutation({
       query: (newSpeechTherapist) => ({
         url: "/signup/speech_therapist",
@@ -41,9 +44,9 @@ export const phonologyApi = createApi({
     getPhonologicalProcesses: builder.query({
       query: () => "/phonological_processes",
     }),
-    // getSpeechTherapists: builder.query({
-
-    // })
+    getAvatars: builder.query({
+      query: () => "/avatars",
+    }),
     // how is data stored? do I need to set up a slice and define initial state and stuff?
     // Need to store currentUser for the entire app
     // For other sections of the app, I need access to:
@@ -66,7 +69,9 @@ export const phonologyApi = createApi({
 export const {
   useGetCurrentUserQuery,
   usePostLoginMutation,
+  useGetSpeechTherapistsQuery,
   useCreateNewSpeechTherapistMutation,
   useCreateNewStudentMutation,
   useGetPhonologicalProcessesQuery,
+  useGetAvatarsQuery,
 } = phonologyApi;
