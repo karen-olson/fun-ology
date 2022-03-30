@@ -48,7 +48,7 @@ export const phonologyApi = createApi({
       query: () => "/avatars",
     }),
     getTargetPhoneme: builder.query({
-      query: () => "/target_phonemes/:id",
+      query: (phoneme_id) => `/target_phonemes/${phoneme_id}`,
     }),
     // how is data stored? do I need to set up a slice and define initial state and stuff?
     // Need to store currentUser for the entire app
