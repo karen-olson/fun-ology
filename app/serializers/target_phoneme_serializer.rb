@@ -1,4 +1,4 @@
 class TargetPhonemeSerializer < ActiveModel::Serializer
   attributes :id, :name
-  has_one :phonological_process
+  has_many :minimal_pairs
 end
