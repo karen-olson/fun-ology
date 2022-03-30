@@ -7,9 +7,14 @@ import {
   Box,
   Typography,
   Container,
+  ImageList,
+  ImageListItem,
 } from "@mui/material";
 import FunologyHeader from "../../components/FunologyHeader";
-import { useCreateNewSpeechTherapistMutation } from "../../services/phonology";
+import {
+  useGetAvatarsQuery,
+  useCreateNewSpeechTherapistMutation,
+} from "../../services/phonology";
 
 const defaultFormData = {
   full_name: "",
@@ -17,31 +22,68 @@ const defaultFormData = {
   email: "",
   password: "",
   password_confirmation: "",
+  avatar_id: "",
 };
 
-const SpeechTherapistSignUpForm = ({ createUser }) => {
+const SpeechTherapistSignUpForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
 
   const navigate = useNavigate();
 
-  const [createNewSpeechTherapist, { isError, error }] =
-    useCreateNewSpeechTherapistMutation();
+  const {
+    data: avatars,
+    isLoading: isGetAvatarsLoading,
+    isError: isGetAvatarsError,
+    error: getAvatarsError,
+  } = useGetAvatarsQuery();
 
-  let errorDisplay;
+  let avatarElements;
 
-  if (isError) {
-    errorDisplay = error.data.errors.map((error) => (
-      <Typography>{error}</Typography>
-    ));
+  if (isGetAvatarsLoading) {
+    avatarElements = null;
+  } else if (isGetAvatarsError) {
+    avatarElements = null;
+    console.error(getAvatarsError);
   } else {
-    errorDisplay = null;
+    avatarElements = avatars.map((avatar) => (
+      <Button key={avatar.id} onClick={handleChange}>
+        <ImageListItem>
+          <img
+            src={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format`}
+            srcSet={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+            alt={avatar.name}
+            loading="lazy"
+            id="avatar_id"
+            name={avatar.id + ": avatar_id"}
+          />
+        </ImageListItem>
+      </Button>
+    ));
   }
 
+  const [
+    createNewSpeechTherapist,
+    {
+      isError: isCreateSpeechTherapistError,
+      error: createSpeechTherapistError,
+    },
+  ] = useCreateNewSpeechTherapistMutation();
+
   function handleChange(event) {
-    const updatedFormData = {
-      ...formData,
-      [event.target.name]: event.target.value,
-    };
+    let updatedFormData;
+
+    if (event.target.name.includes("avatar_id")) {
+      const avatar_id = parseInt(event.target.name);
+      updatedFormData = {
+        ...formData,
+        avatar_id,
+      };
+    } else {
+      updatedFormData = {
+        ...formData,
+        [event.target.name]: event.target.value,
+      };
+    }
 
     setFormData(updatedFormData);
   }
@@ -57,6 +99,21 @@ const SpeechTherapistSignUpForm = ({ createUser }) => {
 
     setFormData(defaultFormData);
   }
+
+  let createSpeechTherapistErrorDisplay;
+
+  if (isCreateSpeechTherapistError) {
+    createSpeechTherapistErrorDisplay =
+      createSpeechTherapistError.data.errors.map(
+        (createSpeechTherapistError) => (
+          <Typography>{createSpeechTherapistError}</Typography>
+        )
+      );
+  } else {
+    createSpeechTherapistErrorDisplay = null;
+  }
+
+  console.log(formData);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -79,6 +136,16 @@ const SpeechTherapistSignUpForm = ({ createUser }) => {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography>Choose an avatar:</Typography>
+              <ImageList
+                sx={{ width: "auto", height: 60 }}
+                cols={7}
+                rowHeight={40}
+              >
+                {avatarElements}
+              </ImageList>
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 id="full_name"
@@ -144,7 +211,7 @@ const SpeechTherapistSignUpForm = ({ createUser }) => {
             Sign Up
           </Button>
           <Typography sx={{ color: "#d36d3a", fontStyle: "italic" }}>
-            {errorDisplay}
+            {createSpeechTherapistErrorDisplay}
           </Typography>
         </Box>
       </Box>

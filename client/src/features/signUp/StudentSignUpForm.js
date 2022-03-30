@@ -52,6 +52,7 @@ const StudentSignUpForm = () => {
     avatarElements = null;
   } else if (isGetAvatarsError) {
     avatarElements = null;
+    console.error(getAvatarsError);
   } else {
     avatarElements = avatars.map((avatar) => (
       <Button key={avatar.id} onClick={handleChange}>
@@ -68,8 +69,6 @@ const StudentSignUpForm = () => {
       </Button>
     ));
   }
-
-  console.log(formData);
 
   const {
     data: speechTherapists,
