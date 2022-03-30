@@ -20,6 +20,10 @@ const LoginForm = ({ setCurrentUser }) => {
   const [formData, setFormData] = useState(defaultFormData);
   const [errors, setErrors] = useState(null);
 
+  // Not using RTK Query for login POST request because it's not correctly setting cookies.
+  // https://github.com/reduxjs/redux-toolkit/issues/2095
+  // Tried adding credentials: include to fetchBaseQuery but it didn't help (and it made it so the other requests didn't work).
+  // The issue is resolved when I make a request using the fetch API instead.
   // const [postLogin, { isLoading, isFetching, isError, error }] =
   //   usePostLoginMutation();
 
@@ -53,7 +57,7 @@ const LoginForm = ({ setCurrentUser }) => {
     fetch("/login", configObj).then((resp) => {
       if (resp.ok) {
         resp.json().then((currentUser) => setCurrentUser(currentUser));
-        navigate("/students");
+        navigate("/phonological_processes");
       } else {
         resp.json().then((err) => setErrors(err.errors));
       }
