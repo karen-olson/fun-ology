@@ -13,6 +13,6 @@ class StudentsController < ApplicationController
     private 
 
     def student_params
-        params.permit(:full_name, :username, :email, :password, :password_confirmation, :speech_therapist_id, :date_of_birth)
+        params.permit(:full_name, :username, :email, :password, :password_confirmation, :speech_therapist_id, :date_of_birth, :avatar_id)
     end
 end
