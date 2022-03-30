@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#destroy"
   resources :avatars, only: :index
   resources :minimal_pairs, only: :index
-  resources :target_phonemes, only: :index
+  resources :target_phonemes, only: [:index, :show]
   resources :phonological_processes, only: :index
   resources :students
   resources :speech_therapists
