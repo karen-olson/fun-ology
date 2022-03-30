@@ -13,7 +13,7 @@ const PhonemeCard = ({ phonologicalProcessName, phoneme }) => {
 
   function handleClick(e) {
     console.log(`${phoneme.name} clicked`);
-    navigate(`/${phonologicalProcessName}/phonemes/${phoneme}`);
+    navigate(`/${phonologicalProcessName}/phonemes/${phoneme.id}`);
   }
 
   let content;

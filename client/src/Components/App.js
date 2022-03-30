@@ -11,7 +11,8 @@ import SignUpConfirmation from "../features/signUp/SignUpConfirmation";
 import StudentsList from "../features/student/StudentsList";
 import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
 import PhonemesList from "../features/phonemes/PhonemesList";
-import PhonemePage from "../features/phonemes/PhonemePage";
+import MinimalPairPage from "../features/minimalPairs/MinimalPairPage";
+import PracticeSessionStartPage from "../features/practiceSessions/PracticeSessionStartPage";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -62,8 +63,12 @@ export default function App() {
             element={<PhonemesList />}
           />
           <Route
-            path="/:phonological_process_name/phonemes/:phoneme"
-            element={<PhonemePage />}
+            path="/:phonological_process_name/phonemes/:phoneme_id"
+            element={<PracticeSessionStartPage />}
+          />
+          <Route
+            path="/:phonological_process_name/phonemes/:phoneme_id/:minimal_pair_number"
+            element={<MinimalPairPage />}
           />
         </Routes>
       </>
