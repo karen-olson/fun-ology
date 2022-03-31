@@ -12,7 +12,7 @@ import StudentsList from "../features/student/StudentsList";
 import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
 import PhonemesList from "../features/phonemes/PhonemesList";
 import MinimalPair from "../features/minimalPairs/MinimalPair";
-import PracticeSessionStartPage from "../features/practiceSessions/PracticeSessionPage";
+import PracticeSessionPage from "../features/practiceSessions/PracticeSessionPage";
 import PracticeSessionEndPage from "../features/practiceSessions/PracticeSessionEndPage";
 
 export default function App() {
@@ -65,7 +65,7 @@ export default function App() {
           />
           <Route
             path="/:phonological_process_name/phonemes/:phoneme_id"
-            element={<PracticeSessionStartPage />}
+            element={<PracticeSessionPage />}
           />
           <Route
             path="/:phonological_process_name/phonemes/:phoneme_id/:minimal_pair_id"
