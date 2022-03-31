@@ -13,6 +13,7 @@ import PhonologicalProcessList from "../features/phonologicalProcesses/Phonologi
 import PhonemesList from "../features/phonemes/PhonemesList";
 import MinimalPairPage from "../features/minimalPairs/MinimalPairPage";
 import PracticeSessionStartPage from "../features/practiceSessions/PracticeSessionStartPage";
+import PracticeSessionEndPage from "../features/practiceSessions/PracticeSessionEndPage";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -67,8 +68,12 @@ export default function App() {
             element={<PracticeSessionStartPage />}
           />
           <Route
-            path="/:phonological_process_name/phonemes/:phoneme_id/:minimal_pair_number"
+            path="/:phonological_process_name/phonemes/:phoneme_id/:minimal_pair_id"
             element={<MinimalPairPage />}
+          />
+          <Route
+            path="/:phonological_process_name/phonemes/:phoneme_id/done"
+            element={<PracticeSessionEndPage />}
           />
         </Routes>
       </>
