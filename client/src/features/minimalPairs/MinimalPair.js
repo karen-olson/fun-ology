@@ -2,17 +2,18 @@ import { Container, Box, Grid, Typography } from "@mui/material";
 
 const MinimalPair = ({ minimalPair }) => {
   return (
-    <Container
-      component="main"
-      maxWidth="md"
-      sx={{ backgroundColor: "orange", m: "1em" }}
-    >
+    <Container component="main" maxWidth="md" sx={{ m: "1em" }}>
       <Box
         sx={{
-          backgroundColor: "purple",
+          borderStyle: "solid",
+          borderRadius: "10px",
+          borderColor: "#00948E",
+          borderWidth: "2px",
+          boxShadow: "0px 4px 3px gray",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          backgroundColor: "#bdfdfa",
         }}
       >
         <Grid
@@ -21,7 +22,6 @@ const MinimalPair = ({ minimalPair }) => {
           sx={{
             width: "auto",
             height: "auto",
-            backgroundColor: "white",
             m: "1em",
             p: "1em",
           }}
@@ -29,7 +29,6 @@ const MinimalPair = ({ minimalPair }) => {
           <Grid
             item
             xs={5}
-            // backgroundColor="red"
             display="flex"
             flexDirection="column"
             alignItems="center"
@@ -45,7 +44,6 @@ const MinimalPair = ({ minimalPair }) => {
           <Grid
             item
             xs={5}
-            // backgroundColor="green"
             display="flex"
             flexDirection="column"
             alignItems="center"
@@ -60,12 +58,14 @@ const MinimalPair = ({ minimalPair }) => {
           <Grid
             item
             xs={5}
-            backgroundColor="primary.light"
-            border={1}
+            backgroundColor="white"
+            borderWidth="2px"
+            borderRadius="10px"
             borderColor="primary.dark"
             display="flex"
             flexDirection="column"
             alignItems="center"
+            sx={{ boxShadow: "0px 2px 2px gray" }}
           >
             <Typography fontFamily="monospace" fontSize="large" pb="1em">
               {minimalPair.first_word}
@@ -75,12 +75,14 @@ const MinimalPair = ({ minimalPair }) => {
           <Grid
             item
             xs={5}
-            backgroundColor="primary.light"
-            border={1}
+            backgroundColor="white"
+            borderWidth="2px"
+            borderRadius="10px"
             borderColor="primary.dark"
             display="flex"
             flexDirection="column"
             alignItems="center"
+            sx={{ boxShadow: "0px 2px 2px gray" }}
           >
             <Typography fontFamily="monospace" fontSize="large" pb="1em">
               {minimalPair.second_word}

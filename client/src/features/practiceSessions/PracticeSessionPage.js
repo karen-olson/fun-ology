@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useGetTargetPhonemeQuery } from "../../services/phonology";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Box, Typography, Button, Grid } from "@mui/material";
+import { Container, Box, Button, IconButton, Grid } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import ClearIcon from "@mui/icons-material/Clear";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import MinimalPair from "../minimalPairs/MinimalPair";
 import Loading from "../../components/Loading";
 
-const PracticeSessionStartPage = () => {
+const PracticeSessionPage = () => {
   const [minimalPairIndex, setMinimalPairIndex] = useState(0);
   const navigate = useNavigate();
   const params = useParams();
@@ -48,6 +52,10 @@ const PracticeSessionStartPage = () => {
     }
   }
 
+  function handleBackClick(e) {
+    console.log(e);
+  }
+
   if (!minimalPairs) {
     return <Loading />;
   } else {
@@ -55,151 +63,112 @@ const PracticeSessionStartPage = () => {
       <Container
         component="main"
         maxWidth="xl"
-        sx={{ backgroundColor: "yellow" }}
+        sx={{ backgroundColor: "white" }}
       >
         <Box
           sx={{
-            backgroundColor: "pink",
+            backgroundColor: "white",
             marginTop: 4,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
         >
-          <div>PracticeSessionStartPage</div>
           <Grid container rowSpacing={1} columnSpacing={"1fr"}>
-            <Grid item xs={1} sx={{ backgroundColor: "white" }}>
-              <p>hello</p>
-            </Grid>
+            <Grid item xs={1} sx={{ backgroundColor: "white" }} />
             <Grid item xs={10}>
               <MinimalPair minimalPair={minimalPairs[minimalPairIndex]} />
             </Grid>
             <Grid item xs={1} sx={{ backgroundColor: "white" }}>
-              <Button
-                variant="contained"
+              <IconButton
                 onClick={handleScoreButtonClick}
-                sx={{ backgroundColor: "secondary.dark", mt: "2em" }}
-              >
-                {/* HTML checkmark symbol */}
-                &#x2714;
-              </Button>
-              <Button
                 variant="contained"
-                onClick={handleScoreButtonClick}
-                sx={{ backgroundColor: "#d36d3a", mt: "1em" }}
-              >
-                {/* HTML X symbol */}
-                &#x2715;
-              </Button>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                backgroundColor: "gray",
-              }}
-            >
-              <Typography fontFamily="monospace">Difficulty Level</Typography>
-            </Grid>
-            <Grid item xs={4} backgroundColor="purple" />
-            <Grid
-              item
-              xs={4}
-              sx={{
-                backgroundColor: "red",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Grid container py="1em" sx={{ backgroundColor: "orange" }}>
-                <Grid
-                  item
-                  xs={4}
-                  backgroundColor="white"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    onClick={handleDifficultyLevelClick}
-                    sx={{
-                      width: "6em",
-                      backgroundColor: "secondary.main",
-                      color: "black",
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    Easy
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  backgroundColor="yellow"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    onClick={handleDifficultyLevelClick}
-                    sx={{
-                      width: "6em",
-                      backgroundColor: "primary",
-                      color: "black",
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    Medium
-                  </Button>
-                </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  backgroundColor="blue"
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    onClick={handleDifficultyLevelClick}
-                    sx={{
-                      width: "6em",
-                      backgroundColor: "#F7A278",
-                      color: "black",
-                      fontFamily: "monospace",
-                    }}
-                  >
-                    Hard
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={3} backgroundColor="green" />
-            <Grid item xs={1} sx={{ mt: 1 }}>
-              <Button
-                variant="contained"
-                onClick={handleNextClick}
                 sx={{
-                  backgroundColor: "primary.dark",
-                  fontFamily: "monospace",
+                  color: "secondary.dark",
+                  backgroundColor: "secondary.light",
+                  mt: "2em",
                 }}
               >
-                Next
+                <CheckIcon fontSize="large" />
+              </IconButton>
+              <IconButton
+                onClick={handleScoreButtonClick}
+                sx={{
+                  color: "#d36d3a",
+                  backgroundColor: "secondary.light",
+                  mt: "1em",
+                }}
+              >
+                <ClearIcon fontSize="large" />
+              </IconButton>
+              <Button
+                variant="contained"
+                onClick={handleDifficultyLevelClick}
+                sx={{
+                  width: "6em",
+                  backgroundColor: "secondary.light",
+                  color: "black",
+                  fontSize: "x-small",
+                  mt: "4em",
+                }}
+              >
+                Easy
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleDifficultyLevelClick}
+                sx={{
+                  width: "6em",
+                  backgroundColor: "secondary.light",
+                  color: "black",
+                  fontSize: "x-small",
+                  mt: "1em",
+                }}
+              >
+                Medium
+              </Button>
+              <Button
+                variant="contained"
+                onClick={handleDifficultyLevelClick}
+                sx={{
+                  width: "6em",
+                  backgroundColor: "secondary.light",
+                  color: "black",
+                  fontSize: "x-small",
+                  mt: "1em",
+                }}
+              >
+                Hard
               </Button>
             </Grid>
+            {/* <Grid item xs={1} backgroundColor="purple" /> */}
+            <Grid
+              item
+              xs={1}
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                backgroundColor: "white",
+              }}
+            >
+              <IconButton
+                onClick={handleBackClick}
+                sx={{ color: "primary.dark" }}
+              >
+                <ArrowCircleLeftIcon fontSize="large" />
+              </IconButton>
+            </Grid>
+            <Grid item xs={10} backgroundColor="white" />
+            <Grid item xs={1}>
+              <IconButton
+                onClick={handleNextClick}
+                sx={{ color: "primary.dark" }}
+              >
+                <ArrowCircleRightIcon fontSize="large" />
+              </IconButton>
+            </Grid>
+            {/* <Grid item xs={1} backgroundColor="purple" /> */}
           </Grid>
         </Box>
       </Container>
@@ -207,4 +176,4 @@ const PracticeSessionStartPage = () => {
   }
 };
 
-export default PracticeSessionStartPage;
+export default PracticeSessionPage;
