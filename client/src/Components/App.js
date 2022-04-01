@@ -12,8 +12,10 @@ import StudentsList from "../features/student/StudentsList";
 import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
 import PhonemesList from "../features/phonemes/PhonemesList";
 import MinimalPair from "../features/minimalPairs/MinimalPair";
+import PracticeSessionStartPage from "../features/practiceSessions/PracticeSessionStartPage";
 import PracticeSessionPage from "../features/practiceSessions/PracticeSessionPage";
 import PracticeSessionEndPage from "../features/practiceSessions/PracticeSessionEndPage";
+import Loading from "./Loading";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -65,11 +67,11 @@ export default function App() {
           />
           <Route
             path="/:phonological_process_name/phonemes/:phoneme_id"
-            element={<PracticeSessionPage />}
+            element={<PracticeSessionStartPage />}
           />
           <Route
-            path="/:phonological_process_name/phonemes/:phoneme_id/:minimal_pair_id"
-            element={<MinimalPair />}
+            path="/:phonological_process_name/phonemes/:phoneme_id/minimal_pairs/:minimal_pair_id"
+            element={<PracticeSessionPage />}
           />
           <Route
             path="/:phonological_process_name/phonemes/:phoneme_id/done"
