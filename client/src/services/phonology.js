@@ -49,21 +49,20 @@ export const phonologyApi = createApi({
     }),
     getTargetPhoneme: builder.query({
       query: (phoneme_id) => `/target_phonemes/${phoneme_id}`,
-    }),
-    // how is data stored? do I need to set up a slice and define initial state and stuff?
-    // Need to store currentUser for the entire app
-    // For other sections of the app, I need access to:
-    //    - list of students
-    //    - individual students
-    //    - list of speech therapists
-    //    - individual speech therapists (?)
+      // Consider randomizing the array here
 
-    // Make endpoints for:
-    //    - creating a student (mutation)
-    //    - creating a speech therapist (mutation)
-    //    - logging in (mutation)
-    //    - logging out (mutation)
-    //    - staying logged in (query)
+      //   //   Credit to W3 Docs for this version of the Fisher-Yates shuffle algorithm
+      //   https://www.w3docs.com/snippets/javascript/how-to-randomize-shuffle-a-javascript-array.html
+      //   function shuffleArray(arr) {
+      //     for (let i = arr.length - 1; i > 0; i--) {
+      //       const j = Math.floor(Math.random() * (i + 1));
+      //       [arr[i], arr[j]] = [arr[j], arr[i]];
+      //     }
+      //     console.log(arr);
+      //   }
+
+      //   const randomMinimalPairs = shuffleArray(minimalPairs);
+    }),
   }),
 });
 
