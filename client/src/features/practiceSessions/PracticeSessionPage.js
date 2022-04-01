@@ -11,6 +11,7 @@ import Loading from "../../components/Loading";
 
 const PracticeSessionPage = () => {
   const [minimalPairIndex, setMinimalPairIndex] = useState(0);
+  const [numberCorrect, setNumberCorrect] = useState(0);
   const navigate = useNavigate();
   const params = useParams();
 
@@ -34,8 +35,18 @@ const PracticeSessionPage = () => {
     minimalPairs = targetPhoneme.minimal_pairs;
   }
 
+  // Handle case where the user presses the browser's "back" button from the "done" page.
+  // Need to set the minimal pair index to the last minimal pair instead of the first.
+  if (
+    minimalPairIndex === 0 &&
+    parseInt(params.minimal_pair_id) === minimalPairs[2].id
+  ) {
+    setMinimalPairIndex(minimalPairs.length - 1);
+  }
+
   function handleScoreButtonClick(e) {
     console.log(e.target);
+    // if it's the plus button, add 1 to number correct
   }
 
   function handleDifficultyLevelClick(e) {
@@ -44,16 +55,28 @@ const PracticeSessionPage = () => {
 
   function handleNextClick() {
     if (minimalPairIndex < minimalPairs.length - 1) {
+      navigate(
+        `/${phonologicalProcessName}/phonemes/${
+          params.phoneme_id
+        }/minimal_pairs/${minimalPairs[minimalPairIndex + 1].id}`
+      );
       setMinimalPairIndex((minimalPairIndex) => minimalPairIndex + 1);
     } else {
       console.log("done");
-      setMinimalPairIndex(0);
       navigate(`/${phonologicalProcessName}/phonemes/${targetPhoneme.id}/done`);
+      // calculate score
+      // const score = numberCorrect / minimalPairs.length;
+      // submit data
     }
   }
 
-  function handleBackClick(e) {
-    console.log(e);
+  function handleBackClick() {
+    if (minimalPairIndex > 0) {
+      setMinimalPairIndex((minimalPairIndex) => minimalPairIndex - 1);
+    } else {
+      setMinimalPairIndex(0);
+    }
+    navigate(-1);
   }
 
   if (!minimalPairs) {
