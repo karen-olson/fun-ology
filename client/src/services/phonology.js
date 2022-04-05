@@ -6,7 +6,7 @@ export const phonologyApi = createApi({
   reducerPath: "phonologyApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/",
-    // credentials: "include",
+    credentials: "include",
   }),
   tagTypes: ["Login"],
   endpoints: (builder) => ({
@@ -43,6 +43,7 @@ export const phonologyApi = createApi({
     }),
     getPhonologicalProcesses: builder.query({
       query: () => "/phonological_processes",
+      // credentials: "include",
     }),
     getAvatars: builder.query({
       query: () => "/avatars",
