@@ -9,14 +9,14 @@ import {
   Button,
 } from "@mui/material";
 import FunologyHeader from "../../components/FunologyHeader";
-// import { usePostLoginMutation } from "../../services/phonology";
+import { usePostLoginMutation } from "../../services/phonology";
 
 const defaultFormData = {
   username: "",
   password: "",
 };
 
-const LoginForm = ({ setCurrentUser }) => {
+const LoginForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
   const [errors, setErrors] = useState(null);
 
@@ -24,8 +24,9 @@ const LoginForm = ({ setCurrentUser }) => {
   // https://github.com/reduxjs/redux-toolkit/issues/2095
   // Tried adding credentials: include to fetchBaseQuery but it didn't help (and it made it so the other requests didn't work).
   // The issue is resolved when I make a request using the fetch API instead.
-  // const [postLogin, { isLoading, isFetching, isError, error }] =
-  //   usePostLoginMutation();
+
+  const [postLogin, { isLoading, isFetching, isError, error }] =
+    usePostLoginMutation();
 
   const navigate = useNavigate();
 
@@ -44,24 +45,30 @@ const LoginForm = ({ setCurrentUser }) => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // postLogin(formData);
+    postLogin(formData);
 
-    const configObj = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    };
+    // const configObj = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(formData),
+    // };
 
-    fetch("/login", configObj).then((resp) => {
-      if (resp.ok) {
-        resp.json().then((currentUser) => setCurrentUser(currentUser));
-        navigate("/phonological_processes");
-      } else {
-        resp.json().then((err) => setErrors(err.errors));
-      }
-    });
+    // fetch("/login", configObj).then((resp) => {
+    //   if (resp.ok) {
+    //     resp.json().then((currentUser) => setCurrentUser(currentUser));
+    //     navigate("/phonological_processes");
+    //   } else {
+    //     resp.json().then((err) => setErrors(err.errors));
+    //   }
+    // });
+
+    if (isError) {
+      setErrors(error.data.errors);
+    } else {
+      navigate("/phonological_processes");
+    }
 
     setFormData(defaultFormData);
   }

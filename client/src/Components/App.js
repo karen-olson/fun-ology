@@ -18,19 +18,13 @@ import PracticeSessionEndPage from "../features/practiceSessions/PracticeSession
 import Loading from "./Loading";
 
 export default function App() {
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    fetch("/me").then((resp) => {
-      if (resp.ok) {
-        resp.json().then((currentUser) => setCurrentUser(currentUser));
-      } else {
-        resp.json().then((err) => console.error(err));
-      }
-    });
-  }, []);
-
-  console.log({ currentUser });
+  const {
+    data: currentUser,
+    isLoading,
+    isError,
+    error,
+  } = useGetCurrentUserQuery();
+  // use tags or useEffect to get this to re-render right away without a refresh?
 
   if (!currentUser) {
     return (
@@ -39,7 +33,8 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route
             path="login"
-            element={<LoginForm setCurrentUser={setCurrentUser} />}
+            // element={<LoginForm setCurrentUser={setCurrentUser} />}
+            element={<LoginForm />}
           />
           <Route path="signup" element={<SignUpPage />} />
           <Route
@@ -54,7 +49,8 @@ export default function App() {
   } else if (currentUser) {
     return (
       <>
-        <NavBar setCurrentUser={setCurrentUser} />
+        {/* <NavBar setCurrentUser={setCurrentUser} /> */}
+        <NavBar />
         <Routes>
           <Route path="students" element={<StudentsList />} />
           <Route
@@ -81,6 +77,6 @@ export default function App() {
       </>
     );
   } else {
-    return <h1>Loading</h1>;
+    return <Loading />;
   }
 }

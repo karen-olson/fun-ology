@@ -2,19 +2,23 @@ import { NavLink } from "react-router-dom";
 import { Box, Tabs, Tab, Button } from "@mui/material";
 import FunologyLogoLarge from "../FunologyLogoLarge.png";
 import { useNavigate } from "react-router-dom";
+import { usePostLogoutMutation } from "../services/phonology";
 
-const NavBar = ({ setCurrentUser }) => {
+const NavBar = () => {
   const navigate = useNavigate();
 
+  const [postLogout, { isLoading, isFetching, isError, error }] =
+    usePostLogoutMutation();
+
   function handleLogoutClick(e) {
-    fetch("/logout", { method: "DELETE" }).then((resp) => {
-      if (resp.ok) {
-        setCurrentUser(null);
-        navigate("/");
-      } else {
-        setCurrentUser(null);
-      }
-    });
+    postLogout();
+    // use tags or useEffect to get this to re-render right away without a refresh?
+
+    if (isError) {
+      console.error(error.data.errors);
+    } else {
+      navigate("/");
+    }
   }
 
   return (

@@ -6,13 +6,14 @@ export const phonologyApi = createApi({
   reducerPath: "phonologyApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:3000/",
+    // Add this line for auth to work
     credentials: "include",
   }),
   tagTypes: ["Login"],
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
       query: () => "/me",
-      providesTags: ["Login"],
+      // providesTags: ["Login"],
     }),
     postLogin: builder.mutation({
       query: (loginInfo) => ({
@@ -20,9 +21,15 @@ export const phonologyApi = createApi({
         method: "POST",
         body: loginInfo,
       }),
-      invalidatesTags: ["Login"],
+      // invalidatesTags: ["Login"],
       // example:
       // invalidatesTags: (result, error, arg) => [{type: 'User Info', id: arg.id}|]
+    }),
+    postLogout: builder.mutation({
+      query: () => ({
+        url: "/logout",
+        method: "DELETE",
+      }),
     }),
     getSpeechTherapists: builder.query({
       query: () => "/speech_therapists",
@@ -72,6 +79,7 @@ export const phonologyApi = createApi({
 export const {
   useGetCurrentUserQuery,
   usePostLoginMutation,
+  usePostLogoutMutation,
   useGetSpeechTherapistsQuery,
   useCreateNewSpeechTherapistMutation,
   useCreateNewStudentMutation,
