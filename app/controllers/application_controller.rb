@@ -8,11 +8,8 @@ class ApplicationController < ActionController::API
   private
 
   def authorize
-    # Why does it say that the session hasn't loaded yet when using RTK Query?
-    # #<ActionDispatch::Request::Session:0x8458 not yet loaded>
-    # The session hash isn't being sent with the request when using RTK Query, but it is when using fetch. 
     @current_user = User.find_by(id: session[:user_id])
-    
+
     render json: {errors: ["Not authorized"]}, status: :unauthorized unless @current_user
   end
 

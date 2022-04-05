@@ -45,6 +45,22 @@ const LoginForm = () => {
         navigate("/phonological_processes");
       });
 
+    // when you make a post to the login or logout routes, I want it to automatically fetch the current user in app
+    // and use that info to conditionally render the routes.
+    // when using state, you call setCurrentUser right after making the request so that the frontend changes
+    // without having to rely on a request to "get /me" ???
+    // or does it call get "/me" when you log in/out?
+    // No, get "me" is for staying logged in after a refresh
+    // ok so I can either:
+    //    trigger a request to get "/me" after logging in/out
+    //    figure out how to use tags to accomplish this (?)
+    //    OR
+    //    just use state to keep track of the current user
+    //    but I can't put the RTK Query hook inside of a useEffect, which is the way I usually handle get "/me"
+    //    Plan:
+    //    Look into tags and cache invalidation to see if that can help solve the problem
+    //    If this takes too long or looks too complicated, just change it back to useEffect and useState
+
     setFormData(defaultFormData);
   }
 
