@@ -27,6 +27,8 @@ const defaultFormData = {
 
 const SpeechTherapistSignUpForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
+  const [selectedTherapistAvatarId, setSelectedTherapistAvatarId] =
+    useState(null);
 
   const navigate = useNavigate();
 
@@ -45,20 +47,44 @@ const SpeechTherapistSignUpForm = () => {
     avatarElements = null;
     console.error(getAvatarsError);
   } else {
-    avatarElements = avatars.map((avatar) => (
-      <Button key={avatar.id} onClick={handleChange}>
-        <ImageListItem>
-          <img
-            src={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format`}
-            srcSet={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-            alt={avatar.name}
-            loading="lazy"
-            id="avatar_id"
-            name={avatar.id + ": avatar_id"}
-          />
-        </ImageListItem>
-      </Button>
-    ));
+    avatarElements = avatars.map((avatar) => {
+      if (avatar.id === selectedTherapistAvatarId) {
+        return (
+          <Button
+            variant="outlined"
+            sx={{ color: "black" }}
+            key={avatar.id}
+            onClick={handleChange}
+          >
+            <ImageListItem>
+              <img
+                src={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                alt={avatar.name}
+                loading="lazy"
+                id="avatar_id"
+                name={avatar.id + ": avatar_id"}
+              />
+            </ImageListItem>
+          </Button>
+        );
+      } else {
+        return (
+          <Button key={avatar.id} onClick={handleChange}>
+            <ImageListItem>
+              <img
+                src={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                alt={avatar.name}
+                loading="lazy"
+                id="avatar_id"
+                name={avatar.id + ": avatar_id"}
+              />
+            </ImageListItem>
+          </Button>
+        );
+      }
+    });
   }
 
   const [
@@ -78,6 +104,7 @@ const SpeechTherapistSignUpForm = () => {
         ...formData,
         avatar_id,
       };
+      setSelectedTherapistAvatarId(avatar_id);
     } else {
       updatedFormData = {
         ...formData,
@@ -98,6 +125,7 @@ const SpeechTherapistSignUpForm = () => {
       });
 
     setFormData(defaultFormData);
+    setSelectedTherapistAvatarId(null);
   }
 
   let createSpeechTherapistErrorDisplay;

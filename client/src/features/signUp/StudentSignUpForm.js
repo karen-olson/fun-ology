@@ -36,6 +36,7 @@ const defaultFormData = {
 
 const StudentSignUpForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
+  const [selectedStudentAvatarId, setSelectedStudentAvatarId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -54,20 +55,44 @@ const StudentSignUpForm = () => {
     avatarElements = null;
     console.error(getAvatarsError);
   } else {
-    avatarElements = avatars.map((avatar) => (
-      <Button key={avatar.id} onClick={handleChange}>
-        <ImageListItem>
-          <img
-            src={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format`}
-            srcSet={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-            alt={avatar.name}
-            loading="lazy"
-            id="avatar_id"
-            name={avatar.id + ": avatar_id"}
-          />
-        </ImageListItem>
-      </Button>
-    ));
+    avatarElements = avatars.map((avatar) => {
+      if (avatar.id === selectedStudentAvatarId) {
+        return (
+          <Button
+            variant="outlined"
+            sx={{ color: "black" }}
+            key={avatar.id}
+            onClick={handleChange}
+          >
+            <ImageListItem>
+              <img
+                src={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                alt={avatar.name}
+                loading="lazy"
+                id="avatar_id"
+                name={avatar.id + ": avatar_id"}
+              />
+            </ImageListItem>
+          </Button>
+        );
+      } else {
+        return (
+          <Button key={avatar.id} onClick={handleChange}>
+            <ImageListItem>
+              <img
+                src={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format`}
+                srcSet={`${avatar.image_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                alt={avatar.name}
+                loading="lazy"
+                id="avatar_id"
+                name={avatar.id + ": avatar_id"}
+              />
+            </ImageListItem>
+          </Button>
+        );
+      }
+    });
   }
 
   const {
@@ -87,7 +112,11 @@ const StudentSignUpForm = () => {
   } else {
     speechTherapistMenuItems = speechTherapists.map((speechTherapist) => {
       return (
-        <MenuItem name="speech_therapist_id" value={speechTherapist.id}>
+        <MenuItem
+          name="speech_therapist_id"
+          value={speechTherapist.id}
+          key={speechTherapist.id}
+        >
           {speechTherapist.full_name}
         </MenuItem>
       );
@@ -118,6 +147,7 @@ const StudentSignUpForm = () => {
         ...formData,
         avatar_id,
       };
+      setSelectedStudentAvatarId(avatar_id);
     } else {
       updatedFormData = {
         ...formData,
@@ -135,14 +165,16 @@ const StudentSignUpForm = () => {
       .unwrap()
       .then(() => navigate("/signup/confirmation"));
 
-    setFormData(defaultFormData);
+    setSelectedStudentAvatarId(null);
   }
 
   let createStudentErrorDisplay;
 
   if (isCreateStudentError) {
     createStudentErrorDisplay = createStudentError.data.errors.map(
-      (createStudentError) => <Typography>{createStudentError}</Typography>
+      (createStudentError) => (
+        <Typography key={createStudentError}>{createStudentError}</Typography>
+      )
     );
   } else {
     createStudentErrorDisplay = null;
