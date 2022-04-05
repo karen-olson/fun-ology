@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import FunologyHeader from "../../components/FunologyHeader";
 import { usePostLoginMutation } from "../../services/phonology";
+import Error from "../../components/Error";
 
 const defaultFormData = {
   username: "",
@@ -18,12 +19,6 @@ const defaultFormData = {
 
 const LoginForm = () => {
   const [formData, setFormData] = useState(defaultFormData);
-  const [errors, setErrors] = useState(null);
-
-  // Not using RTK Query for login POST request because it's not correctly setting cookies.
-  // https://github.com/reduxjs/redux-toolkit/issues/2095
-  // Tried adding credentials: include to fetchBaseQuery but it didn't help (and it made it so the other requests didn't work).
-  // The issue is resolved when I make a request using the fetch API instead.
 
   const [postLogin, { isLoading, isFetching, isError, error }] =
     usePostLoginMutation();
@@ -45,32 +40,21 @@ const LoginForm = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    postLogin(formData);
-
-    // const configObj = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(formData),
-    // };
-
-    // fetch("/login", configObj).then((resp) => {
-    //   if (resp.ok) {
-    //     resp.json().then((currentUser) => setCurrentUser(currentUser));
-    //     navigate("/phonological_processes");
-    //   } else {
-    //     resp.json().then((err) => setErrors(err.errors));
-    //   }
-    // });
-
-    if (isError) {
-      setErrors(error.data.errors);
-    } else {
-      navigate("/phonological_processes");
-    }
+    postLogin(formData)
+      .unwrap()
+      .then(() => {
+        navigate("/phonological_processes");
+      });
 
     setFormData(defaultFormData);
+  }
+
+  let errorDisplay;
+
+  if (isError) {
+    errorDisplay = error.data.errors;
+  } else {
+    errorDisplay = null;
   }
 
   return (
@@ -126,7 +110,7 @@ const LoginForm = () => {
             Log In
           </Button>
           <Typography sx={{ color: "#d36d3a", fontStyle: "italic" }}>
-            {errors}
+            {errorDisplay}
           </Typography>
         </Box>
       </Box>
