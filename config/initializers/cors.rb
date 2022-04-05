@@ -5,6 +5,8 @@
 
 # Read more: https://github.com/cyu/rack-cors
 
+# Remember to add credentials: true (and include credentials on the frontend) for auth to work with RTK Query
+
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins 'http://localhost:4000'
