@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import FunologyHeader from "../../components/FunologyHeader";
 import { usePostLoginMutation } from "../../services/phonology";
-import Error from "../../components/Error";
 
 const defaultFormData = {
   username: "",
