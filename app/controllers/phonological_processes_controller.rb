@@ -9,7 +9,7 @@ class PhonologicalProcessesController < ApplicationController
     #       GET me lives in a useEffect hook inside App
     #       It should run when any page is refreshed... when else? 
     #       Is it doing the desired behavior right now? Or no?
-    skip_before_action :authorize, only: :index
+    # skip_before_action :authorize, only: :index
 
     def index
         phonological_processes = PhonologicalProcess.all

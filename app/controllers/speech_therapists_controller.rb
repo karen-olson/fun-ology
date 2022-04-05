@@ -1,7 +1,7 @@
 class SpeechTherapistsController < ApplicationController
     skip_before_action :authorize, only: :create
     # remove
-    skip_before_action :authorize, only: :index
+    # skip_before_action :authorize, only: :index
 
     def create 
         speech_therapist = SpeechTherapist.create!(speech_therapist_params)
