@@ -1,6 +1,5 @@
 class AvatarsController < ApplicationController
-    # remove
-    # skip_before_action :authorize
+    skip_before_action :authorize
 
     def index
         avatars = Avatar.all 
