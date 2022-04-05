@@ -1,7 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// Define a service using a base URL and expected endpoints
 export const phonologyApi = createApi({
   reducerPath: "phonologyApi",
   baseQuery: fetchBaseQuery({
@@ -9,11 +8,11 @@ export const phonologyApi = createApi({
     // Add this line for auth to work
     credentials: "include",
   }),
-  tagTypes: ["Login"],
+  tagTypes: ["Current User"],
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
       query: () => "/me",
-      // providesTags: ["Login"],
+      providesTags: ["Current User"],
     }),
     postLogin: builder.mutation({
       query: (loginInfo) => ({
@@ -21,15 +20,14 @@ export const phonologyApi = createApi({
         method: "POST",
         body: loginInfo,
       }),
-      // invalidatesTags: ["Login"],
-      // example:
-      // invalidatesTags: (result, error, arg) => [{type: 'User Info', id: arg.id}|]
+      invalidatesTags: ["Current User"],
     }),
     postLogout: builder.mutation({
       query: () => ({
         url: "/logout",
         method: "DELETE",
       }),
+      invalidatesTags: ["Current User"],
     }),
     getSpeechTherapists: builder.query({
       query: () => "/speech_therapists",
@@ -50,7 +48,6 @@ export const phonologyApi = createApi({
     }),
     getPhonologicalProcesses: builder.query({
       query: () => "/phonological_processes",
-      // credentials: "include",
     }),
     getAvatars: builder.query({
       query: () => "/avatars",
@@ -74,8 +71,6 @@ export const phonologyApi = createApi({
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const {
   useGetCurrentUserQuery,
   usePostLoginMutation,

@@ -12,13 +12,7 @@ const NavBar = () => {
 
   function handleLogoutClick(e) {
     postLogout();
-    // use tags or useEffect to get this to re-render right away without a refresh?
-
-    if (isError) {
-      console.error(error.data.errors);
-    } else {
-      navigate("/");
-    }
+    navigate("/");
   }
 
   return (
@@ -33,32 +27,24 @@ const NavBar = () => {
             />
           }
           component={NavLink}
-          to="/"
+          to="/phonological_processes"
           sx={{ mr: "0vw" }}
         />
-        <Tab component={NavLink} label="Explore" to="/" sx={{ mr: "2vw" }} />
         <Tab
           component={NavLink}
-          label="Favorites"
-          to="/videos/favorites"
+          label="Card Decks"
+          to="/phonological_processes"
           sx={{ mr: "2vw" }}
         />
         <Tab
           component={NavLink}
-          label="My Uploads"
-          to="/videos/my_uploads"
-          sx={{ mr: "2vw" }}
-        />
-        <Tab
-          component={NavLink}
-          label="Add a Video"
-          to="/videos/new"
+          label="Student Data"
+          to="/students"
           sx={{ mr: "2vw" }}
         />
         <Button
           onClick={handleLogoutClick}
           variant="contained"
-          // sx={{ mt: 1, mb: 2, pt: 0, pb: 0 }}
           sx={{ marginLeft: "auto", mr: "1em", mt: 1, mb: 2 }}
         >
           Log Out

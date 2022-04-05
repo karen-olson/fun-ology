@@ -1,6 +1,5 @@
 import { useGetCurrentUserQuery } from "../services/phonology";
 import { Routes, Route } from "react-router-dom";
-import { useEffect, useState } from "react";
 import NavBar from "./NavBar";
 import Home from "./Home";
 import LoginForm from "../features/logIn/LoginForm";
@@ -11,7 +10,6 @@ import SignUpConfirmation from "../features/signUp/SignUpConfirmation";
 import StudentsList from "../features/student/StudentsList";
 import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
 import PhonemesList from "../features/phonemes/PhonemesList";
-import MinimalPair from "../features/minimalPairs/MinimalPair";
 import PracticeSessionStartPage from "../features/practiceSessions/PracticeSessionStartPage";
 import PracticeSessionPage from "../features/practiceSessions/PracticeSessionPage";
 import PracticeSessionEndPage from "../features/practiceSessions/PracticeSessionEndPage";
@@ -24,18 +22,18 @@ export default function App() {
     isError,
     error,
   } = useGetCurrentUserQuery();
-  // use tags or useEffect to get this to re-render right away without a refresh?
 
-  if (!currentUser) {
+  const unauthorizedError = error ? error.status === 401 : null;
+  const notLoggedIn = !currentUser || unauthorizedError;
+
+  if (isLoading) {
+    return <Loading />;
+  } else if (notLoggedIn) {
     return (
       <>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route
-            path="login"
-            // element={<LoginForm setCurrentUser={setCurrentUser} />}
-            element={<LoginForm />}
-          />
+          <Route path="login" element={<LoginForm />} />
           <Route path="signup" element={<SignUpPage />} />
           <Route
             path="signup/speech_therapist"
@@ -49,7 +47,6 @@ export default function App() {
   } else if (currentUser) {
     return (
       <>
-        {/* <NavBar setCurrentUser={setCurrentUser} /> */}
         <NavBar />
         <Routes>
           <Route path="students" element={<StudentsList />} />
@@ -76,7 +73,5 @@ export default function App() {
         </Routes>
       </>
     );
-  } else {
-    return <Loading />;
   }
 }
