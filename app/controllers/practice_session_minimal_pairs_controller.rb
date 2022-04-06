@@ -1,0 +1,2 @@
+class PracticeSessionMinimalPairsController < ApplicationController
+end

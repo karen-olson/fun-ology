@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :practice_session_minimal_pairs
+  resources :homework_sessions
+  resources :therapy_sessions
+  resources :practice_sessions
   post "/signup/speech_therapist", to: "speech_therapists#create"
   post "/signup/student", to: "students#create"
   get "/me", to: "users#show"

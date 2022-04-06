@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_29_224737) do
+ActiveRecord::Schema.define(version: 2022_04_06_224615) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,30 @@ ActiveRecord::Schema.define(version: 2022_03_29_224737) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "practice_session_minimal_pairs", force: :cascade do |t|
+    t.string "type"
+    t.bigint "practice_session_id", null: false
+    t.bigint "minimal_pair_id", null: false
+    t.boolean "correct"
+    t.integer "difficulty_level"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["minimal_pair_id"], name: "index_practice_session_minimal_pairs_on_minimal_pair_id"
+    t.index ["practice_session_id"], name: "index_practice_session_minimal_pairs_on_practice_session_id"
+  end
+
+  create_table "practice_sessions", force: :cascade do |t|
+    t.string "type"
+    t.bigint "user_id", null: false
+    t.datetime "date"
+    t.text "notes"
+    t.float "score"
+    t.float "average_difficulty_level"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_practice_sessions_on_user_id"
+  end
+
   create_table "target_phonemes", force: :cascade do |t|
     t.string "name"
     t.bigint "phonological_process_id", null: false
@@ -63,6 +87,9 @@ ActiveRecord::Schema.define(version: 2022_03_29_224737) do
   end
 
   add_foreign_key "minimal_pairs", "target_phonemes"
+  add_foreign_key "practice_session_minimal_pairs", "minimal_pairs"
+  add_foreign_key "practice_session_minimal_pairs", "practice_sessions"
+  add_foreign_key "practice_sessions", "users"
   add_foreign_key "target_phonemes", "phonological_processes"
   add_foreign_key "users", "avatars"
   add_foreign_key "users", "users", column: "speech_therapist_id"
