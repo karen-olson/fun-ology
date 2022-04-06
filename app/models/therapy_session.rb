@@ -1,0 +1,2 @@
+class TherapySession < PracticeSession
+end
