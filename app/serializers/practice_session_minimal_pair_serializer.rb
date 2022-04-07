@@ -1,5 +1,5 @@
 class PracticeSessionMinimalPairSerializer < ActiveModel::Serializer
-  attributes :id, :type, :correct, :difficulty_level
-  has_one :PracticeSession
-  has_one :MinimalPair
+  attributes :id, :correct, :difficulty_level
+  belongs_to :practice_session
+  belongs_to :minimal_pair
 end
