@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_07_011840) do
+ActiveRecord::Schema.define(version: 2022_04_07_012640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2022_04_07_011840) do
   end
 
   create_table "practice_session_minimal_pairs", force: :cascade do |t|
-    t.string "type"
     t.bigint "practice_session_id", null: false
     t.bigint "minimal_pair_id", null: false
     t.boolean "correct"
