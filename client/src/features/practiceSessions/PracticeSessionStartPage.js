@@ -1,34 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import { useParams, useNavigate } from "react-router-dom";
-import { useGetTargetPhonemeQuery } from "../../services/phonology";
+import {
+  useGetTargetPhonemeQuery,
+  useGetStudentsQuery,
+} from "../../services/phonology";
+import { MenuItem, Box, Grid, InputLabel, Select } from "@mui/material";
 
 const PracticeSessionStartPage = () => {
+  const [formData, setFormData] = useState({});
   const params = useParams();
   const navigate = useNavigate();
 
   const phonologicalProcessName = params.phonological_process_name;
   const phonemeId = parseInt(params.phoneme_id);
 
-  console.log({ params });
-  console.log("phonemeId: ", phonemeId);
+  const {
+    data: students,
+    isLoading: isStudentsLoading,
+    isError: isStudentsError,
+    error: studentsError,
+  } = useGetStudentsQuery();
 
   const {
     data: targetPhoneme,
-    isLoading,
-    isError,
-    error,
+    isLoading: isPhonemeLoading,
+    isError: isPhonemeError,
+    error: phonemeError,
   } = useGetTargetPhonemeQuery(phonemeId);
+
+  let studentsOptions;
+
+  if (isStudentsLoading) {
+    studentsOptions = null;
+  } else if (isStudentsError) {
+    studentsOptions = null;
+    console.error(studentsError);
+  } else {
+    studentsOptions = students.map((student) => {
+      return (
+        <MenuItem name="student_id" value={student.id} key={student.id}>
+          {student.full_name}
+        </MenuItem>
+      );
+    });
+  }
 
   let minimalPairs;
 
-  if (isLoading) {
+  if (isPhonemeLoading) {
     minimalPairs = null;
-  } else if (isError) {
+  } else if (isPhonemeError) {
     minimalPairs = null;
-    console.error(error);
+    console.error(phonemeError);
   } else {
     minimalPairs = targetPhoneme.minimal_pairs;
+  }
+
+  function handleChange(event) {
+    console.log(event);
   }
 
   function handleStartClick(e) {
@@ -42,6 +72,30 @@ const PracticeSessionStartPage = () => {
   return (
     <>
       <div>PracticeSessionStartPage</div>
+      <Box
+        component="form"
+        noValidate
+        onSubmit={handleStartClick}
+        sx={{ mt: 3 }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <InputLabel id="student_input_label">Choose a student</InputLabel>
+            <Select
+              labelid="student_label"
+              id="student_id"
+              name="student_id"
+              onChange={handleChange}
+              value={formData["student_id"]}
+              fullWidth
+            >
+              {studentsOptions}
+            </Select>
+          </Grid>
+        </Grid>
+      </Box>
+      {/* student select */}
+      {/* date selector (defaults to today) */}
       <Button onClick={handleStartClick}>Start</Button>
     </>
   );
