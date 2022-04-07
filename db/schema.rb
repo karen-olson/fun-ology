@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_06_224615) do
+ActiveRecord::Schema.define(version: 2022_04_07_005251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,13 +53,13 @@ ActiveRecord::Schema.define(version: 2022_04_06_224615) do
 
   create_table "practice_sessions", force: :cascade do |t|
     t.string "type"
-    t.bigint "user_id", null: false
     t.datetime "date"
     t.text "notes"
     t.float "score"
     t.float "average_difficulty_level"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_practice_sessions_on_user_id"
   end
 
