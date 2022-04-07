@@ -39,6 +39,9 @@ export const phonologyApi = createApi({
         body: newSpeechTherapist,
       }),
     }),
+    getStudents: builder.query({
+      query: () => "/students",
+    }),
     createNewStudent: builder.mutation({
       query: (newStudent) => ({
         url: "/signup/student",
@@ -77,6 +80,7 @@ export const {
   usePostLogoutMutation,
   useGetSpeechTherapistsQuery,
   useCreateNewSpeechTherapistMutation,
+  useGetStudentsQuery,
   useCreateNewStudentMutation,
   useGetPhonologicalProcessesQuery,
   useGetAvatarsQuery,
