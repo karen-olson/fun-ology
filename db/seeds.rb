@@ -257,6 +257,35 @@ fronting_sh_3 = fronting_sh.minimal_pairs.create(
     second_image_url: "https://i.imgur.com/iTpNxLx.png"
 )
 
-# therapy_session_1 = steve.therapy_sessions.create()
+therapy_session_1 = PracticeSession.create!(type: "TherapySession", student_id: steve.id, date: DateTime.strptime('03.17.2022', '%m.%d.%Y'), notes: "some notes")
+
+therapy_session_1_mp_1 = therapy_session_1.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_sh_1.id, correct: true, difficulty_level: 1)
+
+therapy_session_1_mp_2 = therapy_session_1.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_sh_2.id, correct: true, difficulty_level: 2)
+
+therapy_session_1_mp_3 = therapy_session_1.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_sh_3.id, correct: false, difficulty_level: 3)
+
+
+
+therapy_session_2 = PracticeSession.create!(type: "TherapySession", student_id: steve.id, date: DateTime.strptime('04.02.2022', '%m.%d.%Y'), notes: "some more notes")
+
+therapy_session_2_mp_1 = therapy_session_2.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_g_1.id, correct: false, difficulty_level: 3)
+
+therapy_session_2_mp_2 = therapy_session_2.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_g_2.id, correct: true, difficulty_level: 3)
+
+therapy_session_2_mp_3 = therapy_session_2.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_g_3.id, correct: false, difficulty_level: 3)
+
+
+
+
+therapy_session_3 = PracticeSession.create!(type: "TherapySession", student_id: steve.id, date: DateTime.strptime('04.02.2022', '%m.%d.%Y'), notes: "some more notes even")
+
+therapy_session_3_mp_1 = therapy_session_3.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_k_1.id, correct: true, difficulty_level: 1)
+
+therapy_session_3_mp_2 = therapy_session_3.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_k_2.id, correct: true, difficulty_level: 1)
+
+therapy_session_3_mp_3 = therapy_session_3.practice_session_minimal_pairs.create!(minimal_pair_id: fronting_k_3.id, correct: true, difficulty_level: 2)
+
+
 
 puts "🌻 Done seeding 🌻"
