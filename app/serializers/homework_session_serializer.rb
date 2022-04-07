@@ -1,3 +1,3 @@
 class HomeworkSessionSerializer < PracticeSession
-  attributes :id
+  # attributes :id
 end

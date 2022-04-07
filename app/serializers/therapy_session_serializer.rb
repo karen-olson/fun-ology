@@ -1,3 +1,3 @@
 class TherapySessionSerializer < PracticeSession
-  attributes :id
+  # attributes :id
 end
