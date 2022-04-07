@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_07_005251) do
+ActiveRecord::Schema.define(version: 2022_04_07_011840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,8 +59,8 @@ ActiveRecord::Schema.define(version: 2022_04_07_005251) do
     t.float "average_difficulty_level"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_practice_sessions_on_user_id"
+    t.bigint "student_id", null: false
+    t.index ["student_id"], name: "index_practice_sessions_on_student_id"
   end
 
   create_table "target_phonemes", force: :cascade do |t|
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 2022_04_07_005251) do
   add_foreign_key "minimal_pairs", "target_phonemes"
   add_foreign_key "practice_session_minimal_pairs", "minimal_pairs"
   add_foreign_key "practice_session_minimal_pairs", "practice_sessions"
-  add_foreign_key "practice_sessions", "users"
+  add_foreign_key "practice_sessions", "users", column: "student_id"
   add_foreign_key "target_phonemes", "phonological_processes"
   add_foreign_key "users", "avatars"
   add_foreign_key "users", "users", column: "speech_therapist_id"
