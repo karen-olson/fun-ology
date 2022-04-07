@@ -1,6 +1,10 @@
 class StudentsController < ApplicationController
     skip_before_action :authorize, only: :create
 
+    def index 
+        students = Student.all
+        render json: students
+    end
 
     def create 
         student = Student.create!(student_params)
