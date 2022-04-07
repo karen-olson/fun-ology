@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_07_012640) do
+ActiveRecord::Schema.define(version: 2022_04_07_160102) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,8 +54,8 @@ ActiveRecord::Schema.define(version: 2022_04_07_012640) do
     t.string "type"
     t.datetime "date"
     t.text "notes"
-    t.float "score"
-    t.float "average_difficulty_level"
+    t.integer "score"
+    t.integer "average_difficulty_level"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "student_id", null: false
