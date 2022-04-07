@@ -14,6 +14,8 @@ Student.destroy_all
 PhonologicalProcess.destroy_all
 TargetPhoneme.destroy_all
 MinimalPair.destroy_all
+PracticeSession.destroy_all
+PracticeSessionMinimalPair.destroy_all
 
 cat_avatar = Avatar.create(name: "cat", image_url: "https://i.imgur.com/wF0EFCG.png")
 dragon_avatar = Avatar.create(name: "dragon", image_url: "https://i.imgur.com/LAIaidW.png")
@@ -254,5 +256,7 @@ fronting_sh_3 = fronting_sh.minimal_pairs.create(
     first_image_url: "https://i.imgur.com/ot0UGDX.png",
     second_image_url: "https://i.imgur.com/iTpNxLx.png"
 )
+
+# therapy_session_1 = steve.therapy_sessions.create()
 
 puts "🌻 Done seeding 🌻"
