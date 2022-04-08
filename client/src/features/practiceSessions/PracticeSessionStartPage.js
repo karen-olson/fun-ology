@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   useGetTargetPhonemeQuery,
   useGetStudentsQuery,
-  useCreateNewPracticeSessionMutation,
+  useCreatePracticeSessionMutation,
 } from "../../services/phonology";
 import {
   MenuItem,
@@ -28,7 +28,7 @@ const defaultPracticeSession = {
   student_id: null,
 };
 
-const PracticeSessionStartPage = () => {
+const PracticeSessionStartPage = ({ setCurrentPracticeSession }) => {
   const [practiceSessionData, setPracticeSessionData] = useState(
     defaultPracticeSession
   );
@@ -53,12 +53,12 @@ const PracticeSessionStartPage = () => {
   } = useGetTargetPhonemeQuery(phonemeId);
 
   const [
-    createNewPracticeSession,
+    createPracticeSession,
     {
       isError: isCreatePracticeSessionError,
       error: createPracticeSessionError,
     },
-  ] = useCreateNewPracticeSessionMutation();
+  ] = useCreatePracticeSessionMutation();
 
   let studentsOptions;
 
@@ -114,15 +114,16 @@ const PracticeSessionStartPage = () => {
   function handleSubmit(event) {
     event.preventDefault();
 
-    createNewPracticeSession(practiceSessionData)
+    createPracticeSession(practiceSessionData)
       .unwrap()
+      .then((currentPracticeSession) =>
+        setCurrentPracticeSession(currentPracticeSession)
+      )
       .then(() =>
         navigate(
           `/${phonologicalProcessName}/phonemes/${phonemeId}/minimal_pairs/${minimalPairs[0].id}`
         )
       );
-    // create a practice session in the DB (and somehow pass the session number to PracticeSessionPage)
-    // keep local state in app (or redux store?)
   }
 
   let createPracticeSessionErrorDisplay;
