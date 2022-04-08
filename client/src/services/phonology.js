@@ -71,11 +71,18 @@ export const phonologyApi = createApi({
 
       //   const randomMinimalPairs = shuffleArray(minimalPairs);
     }),
-    createNewPracticeSession: builder.mutation({
+    createPracticeSession: builder.mutation({
       query: (newPracticeSession) => ({
         url: "/practice_sessions",
         method: "POST",
         body: newPracticeSession,
+      }),
+    }),
+    createPracticeSessionMinimalPair: builder.mutation({
+      query: (newPracticeSessionMinimalPair) => ({
+        url: "/practice_session_minimal_pairs",
+        method: "POST",
+        body: newPracticeSessionMinimalPair,
       }),
     }),
   }),
@@ -92,5 +99,6 @@ export const {
   useGetPhonologicalProcessesQuery,
   useGetAvatarsQuery,
   useGetTargetPhonemeQuery,
-  useCreateNewPracticeSessionMutation,
+  useCreatePracticeSessionMutation,
+  useCreatePracticeSessionMinimalPairMutation,
 } = phonologyApi;
