@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useGetCurrentUserQuery } from "../services/phonology";
 import { Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
@@ -16,6 +17,8 @@ import PracticeSessionEndPage from "../features/practiceSessions/PracticeSession
 import Loading from "./Loading";
 
 export default function App() {
+  const [currentPracticeSession, setCurrentPracticeSession] = useState(null);
+
   const {
     data: currentUser,
     isLoading,
@@ -60,15 +63,27 @@ export default function App() {
           />
           <Route
             path="/:phonological_process_name/phonemes/:phoneme_id"
-            element={<PracticeSessionStartPage />}
+            element={
+              <PracticeSessionStartPage
+                setCurrentPracticeSession={setCurrentPracticeSession}
+              />
+            }
           />
           <Route
             path="/:phonological_process_name/phonemes/:phoneme_id/minimal_pairs/:minimal_pair_id"
-            element={<PracticeSessionPage />}
+            element={
+              <PracticeSessionPage
+                currentPracticeSession={currentPracticeSession}
+              />
+            }
           />
           <Route
             path="/:phonological_process_name/phonemes/:phoneme_id/done"
-            element={<PracticeSessionEndPage />}
+            element={
+              <PracticeSessionEndPage
+                currentPracticeSession={currentPracticeSession}
+              />
+            }
           />
         </Routes>
       </>
