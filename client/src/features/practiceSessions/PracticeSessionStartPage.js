@@ -5,10 +5,32 @@ import {
   useGetTargetPhonemeQuery,
   useGetStudentsQuery,
 } from "../../services/phonology";
-import { MenuItem, Box, Grid, InputLabel, Select } from "@mui/material";
+import {
+  MenuItem,
+  Box,
+  Grid,
+  InputLabel,
+  Select,
+  TextField,
+  Container,
+  Typography,
+} from "@mui/material";
+import DateAdapter from "@mui/lab/AdapterDateFns";
+import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
+
+const defaultPracticeSession = {
+  type: "TherapySession",
+  date: new Date(),
+  notes: "",
+  score: null,
+  average_difficulty_level: null,
+  student_id: null,
+};
 
 const PracticeSessionStartPage = () => {
-  const [formData, setFormData] = useState({});
+  const [practiceSessionData, setPracticeSessionData] = useState(
+    defaultPracticeSession
+  );
   const params = useParams();
   const navigate = useNavigate();
 
@@ -58,7 +80,25 @@ const PracticeSessionStartPage = () => {
   }
 
   function handleChange(event) {
-    console.log(event);
+    let updatedPracticeSessionData;
+
+    if (event === null) {
+      updatedPracticeSessionData = {
+        ...practiceSessionData,
+        date: "",
+      };
+    } else if (event.target === undefined) {
+      updatedPracticeSessionData = {
+        ...practiceSessionData,
+        date: event,
+      };
+    } else {
+      updatedPracticeSessionData = {
+        ...practiceSessionData,
+        [event.target.name]: event.target.value,
+      };
+    }
+    setPracticeSessionData(updatedPracticeSessionData);
   }
 
   function handleStartClick(e) {
@@ -69,35 +109,80 @@ const PracticeSessionStartPage = () => {
       `/${phonologicalProcessName}/phonemes/${phonemeId}/minimal_pairs/${minimalPairs[0].id}`
     );
   }
+
   return (
-    <>
-      <div>PracticeSessionStartPage</div>
+    <Container component="main" maxWidth="sm">
       <Box
         component="form"
         noValidate
         onSubmit={handleStartClick}
-        sx={{ mt: 3 }}
+        sx={{
+          marginY: 4,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
       >
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <InputLabel id="student_input_label">Choose a student</InputLabel>
+            <Typography
+              component="h1"
+              variant="h3"
+              color="primary.dark"
+              fontFamily="monospace"
+              marginY="1em"
+              align="center"
+            >
+              Let's get started!
+            </Typography>
+          </Grid>
+          <Grid item xs={2} />
+          <Grid item xs={8}>
+            <InputLabel id="student_input_label">Choose a Student</InputLabel>
             <Select
               labelid="student_label"
               id="student_id"
               name="student_id"
               onChange={handleChange}
-              value={formData["student_id"]}
+              value={practiceSessionData["student_id"]}
               fullWidth
             >
               {studentsOptions}
             </Select>
           </Grid>
+          <Grid item xs={2} />
+          <Grid item xs={2} />
+          <Grid item xs={8}>
+            <InputLabel id="date_input_label">Session Date</InputLabel>
+            <LocalizationProvider dateAdapter={DateAdapter}>
+              <DesktopDatePicker
+                inputFormat="MM/dd/yyyy"
+                name="date"
+                value={practiceSessionData["date"]}
+                onChange={handleChange}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item xs={2} />
+          <Grid item xs={2} />
+          <Grid
+            item
+            xs={8}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Button variant="contained" fullWidth onClick={handleStartClick}>
+              Start
+            </Button>
+          </Grid>
+          <Grid item xs={2} />
         </Grid>
       </Box>
-      {/* student select */}
-      {/* date selector (defaults to today) */}
-      <Button onClick={handleStartClick}>Start</Button>
-    </>
+    </Container>
   );
 };
 
