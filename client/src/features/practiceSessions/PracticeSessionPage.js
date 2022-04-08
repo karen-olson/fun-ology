@@ -114,14 +114,14 @@ const PracticeSessionPage = ({ currentPracticeSession }) => {
       });
   }
 
-  function handleBackClick() {
-    if (minimalPairIndex > 0) {
-      setMinimalPairIndex((minimalPairIndex) => minimalPairIndex - 1);
-    } else {
-      setMinimalPairIndex(0);
-    }
-    navigate(-1);
-  }
+  // function handleBackClick() {
+  //   if (minimalPairIndex > 0) {
+  //     setMinimalPairIndex((minimalPairIndex) => minimalPairIndex - 1);
+  //   } else {
+  //     setMinimalPairIndex(0);
+  //   }
+  //   navigate(-1);
+  // }
 
   if (!minimalPairs) {
     return <Loading />;
@@ -223,7 +223,7 @@ const PracticeSessionPage = ({ currentPracticeSession }) => {
               </Button>
             </Grid>
             {/* <Grid item xs={1} backgroundColor="purple" /> */}
-            <Grid
+            {/* <Grid
               item
               xs={1}
               sx={{
@@ -239,8 +239,9 @@ const PracticeSessionPage = ({ currentPracticeSession }) => {
               >
                 <ArrowCircleLeftIcon fontSize="large" />
               </IconButton>
-            </Grid>
-            <Grid item xs={10} backgroundColor="white" />
+            </Grid> */}
+            {/* <Grid item xs={10} backgroundColor="white" /> */}
+            <Grid item xs={11} backgroundColor="white" />
             <Grid item xs={1}>
               <IconButton
                 onClick={handleNextClick}
