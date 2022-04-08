@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   useGetTargetPhonemeQuery,
   useGetStudentsQuery,
+  useCreateNewPracticeSessionMutation,
 } from "../../services/phonology";
 import {
   MenuItem,
@@ -50,6 +51,14 @@ const PracticeSessionStartPage = () => {
     isError: isPhonemeError,
     error: phonemeError,
   } = useGetTargetPhonemeQuery(phonemeId);
+
+  const [
+    createNewPracticeSession,
+    {
+      isError: isCreatePracticeSessionError,
+      error: createPracticeSessionError,
+    },
+  ] = useCreateNewPracticeSessionMutation();
 
   let studentsOptions;
 
@@ -98,16 +107,37 @@ const PracticeSessionStartPage = () => {
         [event.target.name]: event.target.value,
       };
     }
+
     setPracticeSessionData(updatedPracticeSessionData);
   }
 
-  function handleStartClick(e) {
-    console.log(e);
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    createNewPracticeSession(practiceSessionData)
+      .unwrap()
+      .then(() =>
+        navigate(
+          `/${phonologicalProcessName}/phonemes/${phonemeId}/minimal_pairs/${minimalPairs[0].id}`
+        )
+      );
     // create a practice session in the DB (and somehow pass the session number to PracticeSessionPage)
     // keep local state in app (or redux store?)
-    navigate(
-      `/${phonologicalProcessName}/phonemes/${phonemeId}/minimal_pairs/${minimalPairs[0].id}`
-    );
+  }
+
+  let createPracticeSessionErrorDisplay;
+
+  if (isCreatePracticeSessionError) {
+    createPracticeSessionErrorDisplay =
+      createPracticeSessionError.data.errors.map(
+        (createPracticeSessionError) => (
+          <Typography key={createPracticeSessionError}>
+            {createPracticeSessionError}
+          </Typography>
+        )
+      );
+  } else {
+    createPracticeSessionErrorDisplay = null;
   }
 
   return (
@@ -115,7 +145,7 @@ const PracticeSessionStartPage = () => {
       <Box
         component="form"
         noValidate
-        onSubmit={handleStartClick}
+        onSubmit={handleSubmit}
         sx={{
           marginY: 4,
           display: "flex",
@@ -175,9 +205,16 @@ const PracticeSessionStartPage = () => {
               alignItems: "center",
             }}
           >
-            <Button variant="contained" fullWidth onClick={handleStartClick}>
+            <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
               Start
             </Button>
+          </Grid>
+          <Grid item xs={2} />
+          <Grid item xs={2} />
+          <Grid item xs={8}>
+            <Typography sx={{ color: "#d36d3a", fontStyle: "italic" }}>
+              {createPracticeSessionErrorDisplay}
+            </Typography>
           </Grid>
           <Grid item xs={2} />
         </Grid>
