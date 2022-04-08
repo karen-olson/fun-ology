@@ -1,7 +1,7 @@
 import { Container, Box, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
-const PracticeSessionEndPage = ({ currentPracticeSession }) => {
+const PracticeSessionEndPage = () => {
   return (
     <Container component="main" maxWidth="s">
       <Box

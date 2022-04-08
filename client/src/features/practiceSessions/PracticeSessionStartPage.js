@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import {
   useGetTargetPhonemeQuery,
   useGetStudentsQuery,
@@ -18,6 +19,7 @@ import {
 } from "@mui/material";
 import DateAdapter from "@mui/lab/AdapterDateFns";
 import { LocalizationProvider, DesktopDatePicker } from "@mui/lab";
+import { currentPracticeSessionAdded } from "./currentPracticeSessionSlice";
 
 const defaultPracticeSession = {
   type: "TherapySession",
@@ -28,12 +30,13 @@ const defaultPracticeSession = {
   student_id: null,
 };
 
-const PracticeSessionStartPage = ({ setCurrentPracticeSession }) => {
+const PracticeSessionStartPage = () => {
   const [practiceSessionData, setPracticeSessionData] = useState(
     defaultPracticeSession
   );
   const params = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const phonologicalProcessName = params.phonological_process_name;
   const phonemeId = parseInt(params.phoneme_id);
@@ -116,9 +119,10 @@ const PracticeSessionStartPage = ({ setCurrentPracticeSession }) => {
 
     createPracticeSession(practiceSessionData)
       .unwrap()
-      .then((currentPracticeSession) =>
-        setCurrentPracticeSession(currentPracticeSession)
-      )
+      .then((currentPracticeSession) => {
+        dispatch(currentPracticeSessionAdded(currentPracticeSession));
+        // debugger;
+      })
       .then(() =>
         navigate(
           `/${phonologicalProcessName}/phonemes/${phonemeId}/minimal_pairs/${minimalPairs[0].id}`

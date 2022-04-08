@@ -12,22 +12,38 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import MinimalPair from "../minimalPairs/MinimalPair";
 import Loading from "../../components/Loading";
 import { set } from "date-fns/esm";
+import { useSelector } from "react-redux";
 
-const PracticeSessionPage = ({ currentPracticeSession }) => {
+const PracticeSessionPage = () => {
   const [minimalPairIndex, setMinimalPairIndex] = useState(0);
   const navigate = useNavigate();
   const params = useParams();
   const phonologicalProcessName = params.phonological_process_name;
+  const currentPracticeSession = useSelector(
+    (state) => state.currentPracticeSessionReducer.currentPracticeSessionReducer
+  );
 
   const defaultPracticeSessionMinimalPairData = {
     practice_session_id: currentPracticeSession.id,
-    minimal_pair_id: params.minimal_pair_id,
+    minimal_pair_id: parseInt(params.minimal_pair_id),
     correct: null,
     difficulty_level: null,
   };
 
   const [practiceSessionMinimalPairData, setPracticeSessionMinimalPairData] =
     useState(defaultPracticeSessionMinimalPairData);
+
+  console.log(
+    "current practice session in flashcard: ",
+    currentPracticeSession
+  );
+  console.log("psmp in flashcard: ", practiceSessionMinimalPairData);
+  // ERROR
+  // Params aren't being recalculated after hitting the next button even though the URL bar value changes
+  //    How can I tell useParams to listen for a URL change?
+  // When I refresh the page, Redux dumps the data for currentPracticeSession (and all of it??
+  //    How can I tell Redux to hold onto the data until I change it
+  //    Do I HAVE to persist it in the backend if I want it to survive a refresh....? How does this work with state?
 
   const {
     data: targetPhoneme,
@@ -57,13 +73,13 @@ const PracticeSessionPage = ({ currentPracticeSession }) => {
 
   // Handle case where the user presses the browser's "back" button from the "done" page.
   // Need to set the minimal pair index to the last minimal pair instead of the first.
-  if (
-    minimalPairs &&
-    minimalPairIndex === 0 &&
-    parseInt(params.minimal_pair_id) === minimalPairs[2].id
-  ) {
-    setMinimalPairIndex(minimalPairs.length - 1);
-  }
+  // if (
+  //   minimalPairs &&
+  //   minimalPairIndex === 0 &&
+  //   parseInt(params.minimal_pair_id) === minimalPairs[2].id
+  // ) {
+  //   setMinimalPairIndex(minimalPairs.length - 1);
+  // }
 
   function handleScoreButtonClick(e) {
     if (e.currentTarget.name === "correct") {
@@ -112,6 +128,7 @@ const PracticeSessionPage = ({ currentPracticeSession }) => {
           );
         }
       });
+    setPracticeSessionMinimalPairData(defaultPracticeSessionMinimalPairData);
   }
 
   // function handleBackClick() {
