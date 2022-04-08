@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { useGetTargetPhonemeQuery } from "../../services/phonology";
+import {
+  useGetTargetPhonemeQuery,
+  useCreatePracticeSessionMinimalPairMutation,
+} from "../../services/phonology";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Box, Button, IconButton, Grid } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
@@ -8,29 +11,46 @@ import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import MinimalPair from "../minimalPairs/MinimalPair";
 import Loading from "../../components/Loading";
+import { set } from "date-fns/esm";
 
-const PracticeSessionPage = () => {
+const PracticeSessionPage = ({ currentPracticeSession }) => {
   const [minimalPairIndex, setMinimalPairIndex] = useState(0);
-  const [numberCorrect, setNumberCorrect] = useState(0);
   const navigate = useNavigate();
   const params = useParams();
-
   const phonologicalProcessName = params.phonological_process_name;
+
+  const defaultPracticeSessionMinimalPairData = {
+    practice_session_id: currentPracticeSession.id,
+    minimal_pair_id: params.minimal_pair_id,
+    correct: null,
+    difficulty_level: null,
+  };
+
+  const [practiceSessionMinimalPairData, setPracticeSessionMinimalPairData] =
+    useState(defaultPracticeSessionMinimalPairData);
 
   const {
     data: targetPhoneme,
-    isLoading,
-    isError,
-    error,
+    isLoading: isPhonemeLoading,
+    isError: isPhonemeError,
+    error: phonemeError,
   } = useGetTargetPhonemeQuery(parseInt(params.phoneme_id));
+
+  const [
+    createPracticeSessionMinimalPair,
+    {
+      isError: isCreatePracticeSessionMinimalPairError,
+      error: createPracticeSessionMinimalPairError,
+    },
+  ] = useCreatePracticeSessionMinimalPairMutation();
 
   let minimalPairs;
 
-  if (isLoading) {
+  if (isPhonemeLoading) {
     minimalPairs = null;
-  } else if (isError) {
+  } else if (isPhonemeError) {
     minimalPairs = null;
-    console.error(error);
+    console.error(phonemeError);
   } else {
     minimalPairs = targetPhoneme.minimal_pairs;
   }
@@ -38,6 +58,7 @@ const PracticeSessionPage = () => {
   // Handle case where the user presses the browser's "back" button from the "done" page.
   // Need to set the minimal pair index to the last minimal pair instead of the first.
   if (
+    minimalPairs &&
     minimalPairIndex === 0 &&
     parseInt(params.minimal_pair_id) === minimalPairs[2].id
   ) {
@@ -45,29 +66,52 @@ const PracticeSessionPage = () => {
   }
 
   function handleScoreButtonClick(e) {
-    console.log(e.target);
-    // if it's the plus button, add 1 to number correct
+    if (e.currentTarget.name === "correct") {
+      setPracticeSessionMinimalPairData({
+        ...practiceSessionMinimalPairData,
+        correct: true,
+      });
+    } else {
+      setPracticeSessionMinimalPairData({
+        ...practiceSessionMinimalPairData,
+        correct: false,
+      });
+    }
   }
 
   function handleDifficultyLevelClick(e) {
-    console.log(e.target);
+    const key = {
+      easy: 1,
+      medium: 2,
+      hard: 3,
+    };
+
+    setPracticeSessionMinimalPairData({
+      ...practiceSessionMinimalPairData,
+      difficulty_level: key[e.currentTarget.name],
+    });
   }
 
+  console.log("psmp data: ", practiceSessionMinimalPairData);
+
   function handleNextClick() {
-    if (minimalPairIndex < minimalPairs.length - 1) {
-      navigate(
-        `/${phonologicalProcessName}/phonemes/${
-          params.phoneme_id
-        }/minimal_pairs/${minimalPairs[minimalPairIndex + 1].id}`
-      );
-      setMinimalPairIndex((minimalPairIndex) => minimalPairIndex + 1);
-    } else {
-      console.log("done");
-      navigate(`/${phonologicalProcessName}/phonemes/${targetPhoneme.id}/done`);
-      // calculate score
-      // const score = numberCorrect / minimalPairs.length;
-      // submit data
-    }
+    createPracticeSessionMinimalPair(practiceSessionMinimalPairData)
+      .unwrap()
+      .then(() => {
+        if (minimalPairIndex < minimalPairs.length - 1) {
+          navigate(
+            `/${phonologicalProcessName}/phonemes/${
+              params.phoneme_id
+            }/minimal_pairs/${minimalPairs[minimalPairIndex + 1].id}`
+          );
+          setMinimalPairIndex((minimalPairIndex) => minimalPairIndex + 1);
+        } else {
+          console.log("done");
+          navigate(
+            `/${phonologicalProcessName}/phonemes/${targetPhoneme.id}/done`
+          );
+        }
+      });
   }
 
   function handleBackClick() {
@@ -103,8 +147,12 @@ const PracticeSessionPage = () => {
               <MinimalPair minimalPair={minimalPairs[minimalPairIndex]} />
             </Grid>
             <Grid item xs={1} sx={{ backgroundColor: "white" }}>
-              <IconButton
+              <Button
+                component="button"
                 onClick={handleScoreButtonClick}
+                aria-label="correct"
+                name="correct"
+                id="correct"
                 variant="contained"
                 sx={{
                   color: "secondary.dark",
@@ -113,9 +161,13 @@ const PracticeSessionPage = () => {
                 }}
               >
                 <CheckIcon fontSize="large" />
-              </IconButton>
-              <IconButton
+              </Button>
+              <Button
                 onClick={handleScoreButtonClick}
+                aria-label="incorrect"
+                name="incorrect"
+                id="incorrect"
+                variant="contained"
                 sx={{
                   color: "#d36d3a",
                   backgroundColor: "secondary.light",
@@ -123,10 +175,12 @@ const PracticeSessionPage = () => {
                 }}
               >
                 <ClearIcon fontSize="large" />
-              </IconButton>
+              </Button>
               <Button
-                variant="contained"
+                name="easy"
+                id="easy"
                 onClick={handleDifficultyLevelClick}
+                variant="contained"
                 sx={{
                   width: "6em",
                   backgroundColor: "secondary.light",
@@ -138,8 +192,10 @@ const PracticeSessionPage = () => {
                 Easy
               </Button>
               <Button
-                variant="contained"
+                name="medium"
+                id="medium"
                 onClick={handleDifficultyLevelClick}
+                variant="contained"
                 sx={{
                   width: "6em",
                   backgroundColor: "secondary.light",
@@ -151,8 +207,10 @@ const PracticeSessionPage = () => {
                 Medium
               </Button>
               <Button
-                variant="contained"
+                name="hard"
+                id="hard"
                 onClick={handleDifficultyLevelClick}
+                variant="contained"
                 sx={{
                   width: "6em",
                   backgroundColor: "secondary.light",
