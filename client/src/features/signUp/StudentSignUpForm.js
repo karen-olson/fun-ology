@@ -302,12 +302,7 @@ const StudentSignUpForm = () => {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 2, mb: 2 }}
-            >
+            <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
               Sign Up
             </Button>
             <Typography sx={{ color: "#d36d3a", fontStyle: "italic" }}>
