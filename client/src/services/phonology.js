@@ -85,6 +85,9 @@ export const phonologyApi = createApi({
         body: newPracticeSessionMinimalPair,
       }),
     }),
+    getCurrentPracticeSession: builder.query({
+      query: () => "/current_practice_session",
+    }),
     // editPracticeSession: builder.mutation({
     //   query: (updatedPracticeSession) => ({
     //     url: `/practice_sessions/${updatedPracticeSession.id}`,
@@ -108,4 +111,5 @@ export const {
   useGetTargetPhonemeQuery,
   useCreatePracticeSessionMutation,
   useCreatePracticeSessionMinimalPairMutation,
+  useGetCurrentPracticeSessionQuery,
 } = phonologyApi;
