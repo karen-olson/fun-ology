@@ -34,15 +34,24 @@ export default function App() {
   //        POST currentPracticeSession on start page
   //        GET currentPracticeSession
   //        DELETE currentPracticeSession on end page
+  //    CONS
+  //        Not the most efficient way to do things
+  //    ALTERNATE OPTION
+  //        Add "current" column to PracticeSessions, and index it for efficiency
 
   //    PERSIST CURRENTSESSIONID IN URL:
   //        Store the practice session ID in the URL
+  //    NOT IDEAL
+  //        Seems logistically tricky becuase it would have to be added to multiple paths and
+  //        not at the base of the URL
 
   //    REDUX SLICE (NO API INTERACTION): TRIED, DIDN'T WORK
   //        Store it in Redux without making any calls to backend by creating a currentPracticeSessionSlice
   //          how long does it persist for? will it disappear when I refresh my app?
   //    DIDN'T WORK
   //        All of Redux data resets on a refresh (is this how it's supposed to work? )
+  //    COULD TRY REDUX-PERSIST
+  //        Seems over-complicated
 
   // SOLUTION
 
