@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   useGetTargetPhonemeQuery,
   useCreatePracticeSessionMinimalPairMutation,
+  useGetCurrentPracticeSessionQuery,
 } from "../../services/phonology";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Box, Button, IconButton, Grid } from "@mui/material";
@@ -11,39 +12,40 @@ import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import MinimalPair from "../minimalPairs/MinimalPair";
 import Loading from "../../components/Loading";
-import { set } from "date-fns/esm";
-import { useSelector } from "react-redux";
 
 const PracticeSessionPage = () => {
   const [minimalPairIndex, setMinimalPairIndex] = useState(0);
+  const [practiceSessionMinimalPairData, setPracticeSessionMinimalPairData] =
+    useState({});
   const navigate = useNavigate();
   const params = useParams();
   const phonologicalProcessName = params.phonological_process_name;
-  const currentPracticeSession = useSelector(
-    (state) => state.currentPracticeSessionReducer.currentPracticeSessionReducer
-  );
 
-  const defaultPracticeSessionMinimalPairData = {
-    practice_session_id: currentPracticeSession.id,
-    minimal_pair_id: parseInt(params.minimal_pair_id),
-    correct: null,
-    difficulty_level: null,
-  };
+  const {
+    data: currentPracticeSession,
+    isLoading: isGetCurrentPracticeSessionLoading,
+    isError: isGetCurrentPracticeSessionError,
+    error: getCurrentPracticeSessionError,
+  } = useGetCurrentPracticeSessionQuery();
 
-  const [practiceSessionMinimalPairData, setPracticeSessionMinimalPairData] =
-    useState(defaultPracticeSessionMinimalPairData);
+  let defaultPracticeSessionMinimalPairData;
 
-  console.log(
-    "current practice session in flashcard: ",
-    currentPracticeSession
-  );
-  console.log("psmp in flashcard: ", practiceSessionMinimalPairData);
-  // ERROR
-  // Params aren't being recalculated after hitting the next button even though the URL bar value changes
-  //    How can I tell useParams to listen for a URL change?
-  // When I refresh the page, Redux dumps the data for currentPracticeSession (and all of it??
-  //    How can I tell Redux to hold onto the data until I change it
-  //    Do I HAVE to persist it in the backend if I want it to survive a refresh....? How does this work with state?
+  useEffect(() => {
+    if (isGetCurrentPracticeSessionLoading) {
+      <Loading />;
+    } else if (isGetCurrentPracticeSessionError) {
+      console.error(getCurrentPracticeSessionError);
+      // work on error display
+    } else {
+      defaultPracticeSessionMinimalPairData = {
+        practice_session_id: currentPracticeSession.id,
+        minimal_pair_id: parseInt(params.minimal_pair_id),
+        correct: null,
+        difficulty_level: null,
+      };
+      setPracticeSessionMinimalPairData(defaultPracticeSessionMinimalPairData);
+    }
+  }, [currentPracticeSession, params.minimal_pair_id]);
 
   const {
     data: targetPhoneme,
@@ -71,16 +73,6 @@ const PracticeSessionPage = () => {
     minimalPairs = targetPhoneme.minimal_pairs;
   }
 
-  // Handle case where the user presses the browser's "back" button from the "done" page.
-  // Need to set the minimal pair index to the last minimal pair instead of the first.
-  // if (
-  //   minimalPairs &&
-  //   minimalPairIndex === 0 &&
-  //   parseInt(params.minimal_pair_id) === minimalPairs[2].id
-  // ) {
-  //   setMinimalPairIndex(minimalPairs.length - 1);
-  // }
-
   function handleScoreButtonClick(e) {
     if (e.currentTarget.name === "correct") {
       setPracticeSessionMinimalPairData({
@@ -107,8 +99,6 @@ const PracticeSessionPage = () => {
       difficulty_level: key[e.currentTarget.name],
     });
   }
-
-  console.log("psmp data: ", practiceSessionMinimalPairData);
 
   function handleNextClick() {
     createPracticeSessionMinimalPair(practiceSessionMinimalPairData)
@@ -138,6 +128,16 @@ const PracticeSessionPage = () => {
   //     setMinimalPairIndex(0);
   //   }
   //   navigate(-1);
+  // }
+
+  // Handle case where the user presses the browser's "back" button from the "done" page.
+  // Need to set the minimal pair index to the last minimal pair instead of the first.
+  // if (
+  //   minimalPairs &&
+  //   minimalPairIndex === 0 &&
+  //   parseInt(params.minimal_pair_id) === minimalPairs[2].id
+  // ) {
+  //   setMinimalPairIndex(minimalPairs.length - 1);
   // }
 
   if (!minimalPairs) {
