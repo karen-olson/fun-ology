@@ -75,7 +75,7 @@ export const phonologyApi = createApi({
       query: (newPracticeSession) => ({
         url: "/practice_sessions",
         method: "POST",
-        body: newPracticeSession,
+        body: { ...newPracticeSession, current: true },
       }),
     }),
     createPracticeSessionMinimalPair: builder.mutation({
@@ -85,6 +85,13 @@ export const phonologyApi = createApi({
         body: newPracticeSessionMinimalPair,
       }),
     }),
+    // editPracticeSession: builder.mutation({
+    //   query: (updatedPracticeSession) => ({
+    //     url: `/practice_sessions/${updatedPracticeSession.id}`,
+    //     method: "PATCH",
+    //     body: updatedPracticeSession
+    //   })
+    // })
   }),
 });
 

@@ -10,6 +10,6 @@ class PracticeSessionsController < ApplicationController
     private
 
     def practice_session_params
-        params.permit(:type, :date, :notes, :student_id)
+        params.permit(:type, :date, :notes, :student_id, :current)
     end
 end
