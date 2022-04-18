@@ -46,7 +46,7 @@ const StudentList = () => {
           fontFamily="monospace"
           align="center"
         >
-          Choose a Student to View Data
+          Select a Student
         </Typography>
         {content}
       </Box>

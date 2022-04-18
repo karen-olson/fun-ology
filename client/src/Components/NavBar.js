@@ -38,7 +38,7 @@ const NavBar = () => {
         />
         <Tab
           component={NavLink}
-          label="Student Data"
+          label="Students"
           to="/students"
           sx={{ mr: "2vw" }}
         />
