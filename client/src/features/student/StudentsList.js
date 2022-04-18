@@ -1,11 +1,16 @@
 import StudentCard from "./StudentCard";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
-import { useGetStudentsQuery } from "../../services/phonology";
+import { useGetAlphabetizedStudentsQuery } from "../../services/phonology";
 import { Container, Box, Typography, Grid } from "@mui/material";
 
 const StudentList = () => {
-  const { data: students, isLoading, isError, error } = useGetStudentsQuery();
+  const {
+    data: students,
+    isLoading,
+    isError,
+    error,
+  } = useGetAlphabetizedStudentsQuery();
 
   let content;
 
@@ -14,6 +19,7 @@ const StudentList = () => {
       return <Loading />;
     };
   } else if (isError) {
+    debugger;
     content = <Error error={error} />;
   } else {
     const studentCards = students.map((student) => (

@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   useGetTargetPhonemeQuery,
-  useGetStudentsQuery,
+  useGetAlphabetizedStudentsQuery,
   useCreatePracticeSessionMutation,
 } from "../../services/phonology";
 import {
@@ -46,7 +46,7 @@ const PracticeSessionStartPage = () => {
     isLoading: isStudentsLoading,
     isError: isStudentsError,
     error: studentsError,
-  } = useGetStudentsQuery();
+  } = useGetAlphabetizedStudentsQuery();
 
   const {
     data: targetPhoneme,
