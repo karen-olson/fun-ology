@@ -1,6 +1,11 @@
+import { useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { IconButton, Typography } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const StudentDataTable = () => {
+  const [selectionModel, setSelectionModel] = useState([]);
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "firstName", headerName: "First name", width: 130 },
@@ -34,14 +39,31 @@ const StudentDataTable = () => {
     { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
   ];
 
+  function handleDeletePracticeSessionClick() {
+    if (selectionModel.length === 0) {
+      return;
+    } else {
+      debugger;
+      // iterate through array and make a delete request for each id in the array
+    }
+  }
+
   return (
     <div style={{ height: 400, width: "100%" }}>
+      <IconButton onClick={handleDeletePracticeSessionClick}>
+        <DeleteIcon />
+        <Typography>Delete Selected Practice Session(s)</Typography>
+      </IconButton>
       <DataGrid
         rows={rows}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
         checkboxSelection
+        onSelectionModelChange={(newSelectionModel) => {
+          setSelectionModel(newSelectionModel);
+        }}
+        selectionModel={selectionModel}
       />
     </div>
   );
