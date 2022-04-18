@@ -6,6 +6,11 @@ class StudentsController < ApplicationController
         render json: students
     end
 
+    def alphabetical_index
+        alphabetized_students = Student.alphabetize
+        render json: alphabetized_students
+    end
+
     def show
         student = Student.find(params[:id])
         render json: student
