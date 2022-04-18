@@ -2,7 +2,7 @@ import PhonologicalProcessCard from "./PhonologicalProcessCard";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
 import { useGetPhonologicalProcessesQuery } from "../../services/phonology";
-import { Container, Box } from "@mui/material";
+import { Container, Box, Typography, Grid } from "@mui/material";
 
 const PhonologicalProcessList = () => {
   const {
@@ -25,18 +25,35 @@ const PhonologicalProcessList = () => {
   } else {
     const phonologicalProcessCards = phonologicalProcesses.map(
       (phonologicalProcess) => (
-        <PhonologicalProcessCard
-          phonologicalProcess={phonologicalProcess}
-          key={phonologicalProcess.id}
-        />
+        <Grid item xs={4}>
+          <PhonologicalProcessCard
+            phonologicalProcess={phonologicalProcess}
+            key={phonologicalProcess.id}
+          />
+        </Grid>
       )
     );
-    content = phonologicalProcessCards;
+    content = (
+      <Grid container columns={1} rowSpacing={4}>
+        {phonologicalProcessCards}
+      </Grid>
+    );
   }
 
   return (
-    <Container>
-      <Box>{content}</Box>
+    <Container component="main" maxWidth="xs">
+      <Box>
+        <Typography
+          mb={3}
+          color="primary.dark"
+          fontSize="x-large"
+          fontFamily="monospace"
+          align="center"
+        >
+          Choose a Deck to Practice
+        </Typography>
+        {content}
+      </Box>
     </Container>
   );
 };

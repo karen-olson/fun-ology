@@ -22,10 +22,17 @@ const PhonemeCard = ({ phonologicalProcessName, phoneme }) => {
     content = <Loading />;
   } else {
     content = (
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, backgroundColor: "primary.dark" }}>
         <CardActionArea onClick={handleClick}>
           <CardContent>
-            <Typography>{phoneme.name}</Typography>
+            <Typography
+              color="white"
+              fontSize="large"
+              fontFamily="monospace"
+              align="center"
+            >
+              {phoneme.name}
+            </Typography>
           </CardContent>
         </CardActionArea>
       </Card>
