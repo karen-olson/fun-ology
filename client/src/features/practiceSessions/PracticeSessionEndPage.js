@@ -12,7 +12,7 @@ import DonePageGraphic from "../../DonePageGraphic.png";
 
 const PracticeSessionEndPage = () => {
   const [showNotes, setShowNotes] = useState(false);
-  const [motes, setNotes] = useState("");
+  const [notes, setNotes] = useState("");
 
   function handleShowNotesClick() {
     setShowNotes(!showNotes);
@@ -48,10 +48,10 @@ const PracticeSessionEndPage = () => {
     );
   }
 
-  let notes;
+  let notesForm;
 
   if (showNotes === true) {
-    notes = (
+    notesForm = (
       <>
         <Typography
           component="h1"
@@ -90,7 +90,7 @@ const PracticeSessionEndPage = () => {
       </>
     );
   } else {
-    notes = null;
+    notesForm = null;
   }
 
   return (
@@ -148,7 +148,7 @@ const PracticeSessionEndPage = () => {
           Keep working hard!
         </Typography>
         <Box m={2}>{showNotesButton}</Box>
-        <Box m={2}>{notes}</Box>
+        <Box m={2}>{notesForm}</Box>
       </Box>
     </Container>
   );
