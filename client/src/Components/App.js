@@ -9,6 +9,7 @@ import SpeechTherapistSignUpForm from "../features/signUp/SpeechTherapistSignUpF
 import SignUpPage from "../features/signUp/SignUpPage";
 import SignUpConfirmation from "../features/signUp/SignUpConfirmation";
 import StudentsList from "../features/student/StudentsList";
+import StudentDataPage from "../features/student/StudentDataPage";
 import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
 import PhonemesList from "../features/phonemes/PhonemesList";
 import PracticeSessionStartPage from "../features/practiceSessions/PracticeSessionStartPage";
@@ -89,6 +90,7 @@ export default function App() {
         <NavBar />
         <Routes>
           <Route path="students" element={<StudentsList />} />
+          <Route path="students/:id" element={<StudentDataPage />} />
           <Route
             path="phonological_processes"
             element={<PhonologicalProcessList />}
