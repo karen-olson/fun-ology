@@ -10,6 +10,7 @@ import SignUpPage from "../features/signUp/SignUpPage";
 import SignUpConfirmation from "../features/signUp/SignUpConfirmation";
 import StudentsList from "../features/student/StudentsList";
 import StudentDataPage from "../features/student/StudentDataPage";
+import EditStudentForm from "../features/student/EditStudentForm";
 import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
 import PhonemesList from "../features/phonemes/PhonemesList";
 import PracticeSessionStartPage from "../features/practiceSessions/PracticeSessionStartPage";
@@ -91,6 +92,7 @@ export default function App() {
         <Routes>
           <Route path="students" element={<StudentsList />} />
           <Route path="students/:id" element={<StudentDataPage />} />
+          <Route path="students/:id/edit" element={<EditStudentForm />} />
           <Route
             path="phonological_processes"
             element={<PhonologicalProcessList />}
