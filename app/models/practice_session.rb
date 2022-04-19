@@ -5,7 +5,7 @@ class PracticeSession < ApplicationRecord
 
   validates :type, presence: true
   
-  def score
+  def update_score
     scores = self.practice_session_minimal_pairs.map{|practice_session_minimal_pair|   
       practice_session_minimal_pair.correct}
 
@@ -20,7 +20,7 @@ class PracticeSession < ApplicationRecord
     end
   end
 
-  def average_difficulty_level
+  def update_average_difficulty_level
     difficulty_levels = self.practice_session_minimal_pairs.map{|practice_session_minimal_pair|
       practice_session_minimal_pair.difficulty_level}
     
