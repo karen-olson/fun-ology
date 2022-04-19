@@ -55,6 +55,13 @@ export const phonologyApi = createApi({
         body: newStudent,
       }),
     }),
+    editStudent: builder.mutation({
+      query: (updatedStudent) => ({
+        url: `/students/${updatedStudent.id}`,
+        method: "PATCH",
+        body: updatedStudent,
+      }),
+    }),
     getPhonologicalProcesses: builder.query({
       query: () => "/phonological_processes",
     }),
@@ -116,6 +123,7 @@ export const {
   useGetAlphabetizedStudentsQuery,
   useGetStudentQuery,
   useCreateNewStudentMutation,
+  useEditStudentMutation,
 
   useGetPhonologicalProcessesQuery,
   useGetAvatarsQuery,

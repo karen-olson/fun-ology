@@ -18,10 +18,13 @@ class StudentsController < ApplicationController
 
     def create 
         student = Student.create!(student_params)
-        # log them in after creating an account?
-        # probably not
-        #       ??? session[:user_id] = student.id
         render json: student, status: :created
+    end
+
+    def update
+        student = Student.find(params[:id])
+        student.update!(student_params)
+        render json: student, status: :ok
     end
 
     private 
