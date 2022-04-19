@@ -92,15 +92,15 @@ export const phonologyApi = createApi({
       }),
     }),
     getCurrentPracticeSession: builder.query({
-      query: () => "/current_practice_session",
+      query: () => "/practice_sessions/current",
     }),
-    // editPracticeSession: builder.mutation({
-    //   query: (updatedPracticeSession) => ({
-    //     url: `/practice_sessions/${updatedPracticeSession.id}`,
-    //     method: "PATCH",
-    //     body: updatedPracticeSession
-    //   })
-    // })
+    updatePracticeSession: builder.mutation({
+      query: (updatedPracticeSession) => ({
+        url: `/practice_sessions/${updatedPracticeSession.id}`,
+        method: "PATCH",
+        body: updatedPracticeSession,
+      }),
+    }),
   }),
 });
 
@@ -108,16 +108,22 @@ export const {
   useGetCurrentUserQuery,
   usePostLoginMutation,
   usePostLogoutMutation,
+
   useGetSpeechTherapistsQuery,
   useCreateNewSpeechTherapistMutation,
+
   useGetStudentsQuery,
   useGetAlphabetizedStudentsQuery,
   useGetStudentQuery,
   useCreateNewStudentMutation,
+
   useGetPhonologicalProcessesQuery,
   useGetAvatarsQuery,
   useGetTargetPhonemeQuery,
+
   useCreatePracticeSessionMutation,
   useCreatePracticeSessionMinimalPairMutation,
   useGetCurrentPracticeSessionQuery,
+  useUpdatePracticeSessionMutation,
+  useCalculatePracticeSessionScoreMutation,
 } = phonologyApi;
