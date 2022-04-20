@@ -25,15 +25,19 @@ const defaultPracticeSession = {
   type: "TherapySession",
   date: new Date(),
   notes: "",
-  score: null,
-  average_difficulty_level: null,
-  student_id: null,
+  score: "",
+  average_difficulty_level: "",
+  student_id: "",
+  current: true,
 };
 
 const PracticeSessionStartPage = () => {
   const [practiceSessionData, setPracticeSessionData] = useState(
     defaultPracticeSession
   );
+
+  console.log("practice session data in start page: ", practiceSessionData);
+
   const params = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();

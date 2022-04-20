@@ -28,8 +28,6 @@ const PracticeSessionEndPage = () => {
     // error: currentPracticeSessionError,
   } = useGetCurrentPracticeSessionQuery();
 
-  console.log({ currentPracticeSession });
-
   const [practiceSessionData, setPracticeSessionData] = useState({
     id: currentPracticeSession.id,
     type: currentPracticeSession.type,
@@ -40,6 +38,8 @@ const PracticeSessionEndPage = () => {
     student_id: currentPracticeSession.student_id,
     current: currentPracticeSession.current,
   });
+
+  console.log("practice session data in end page: ", practiceSessionData);
 
   const navigate = useNavigate();
 
@@ -92,7 +92,9 @@ const PracticeSessionEndPage = () => {
       ...practiceSessionData,
       notes: notes,
       current: false,
-    });
+    })
+      .unwrap()
+      .then((resp) => console.log("update practice session response: ", resp));
     navigate("/phonological_processes");
   }
 
