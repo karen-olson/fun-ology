@@ -1,5 +1,5 @@
 class PracticeSessionSerializer < ActiveModel::Serializer
-  attributes :id, :student_id, :type, :date, :notes, :score, :average_difficulty_level, :average_difficulty_level_descriptor, :get_minimal_pair, :current
+  attributes :id, :student_id, :type, :date, :notes, :score, :average_difficulty_level, :average_difficulty_level_descriptor, :current
   belongs_to :student
 
   def average_difficulty_level_descriptor

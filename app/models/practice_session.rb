@@ -33,20 +33,4 @@ class PracticeSession < ApplicationRecord
       end
   end
 
-  def get_minimal_pair
-    self.minimal_pairs.first
-  end
-
-  # def get_target_phoneme 
-  #   pair = get_minimal_pair
-  #   pair.target_phoneme
-  # end
-
-  # def get_phonological_process
-  #   minimal_pair_2 = self.minimal_pairs.second
-  #   # byebug
-  #   target_phoneme_2 = minimal_pair_2.target_phoneme
-  #   phonological_process = target_phoneme_2.phonological_process.name
-  # end
-
 end
