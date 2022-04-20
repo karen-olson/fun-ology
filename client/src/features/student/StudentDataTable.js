@@ -1,24 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { useGetStudentPracticeSessionsQuery } from "../../services/phonology";
+import { useDeletePracticeSessionsMutation } from "../../services/phonology";
+// import { useGetPracticeSessionsForStudentQuery } from "../../services/phonology";
 
 const StudentDataTable = () => {
   const [selectionModel, setSelectionModel] = useState([]);
+  const [practiceSessionsForStudent, setPracticeSessionsForStudent] = useState(
+    []
+  );
 
   const params = useParams();
 
-  const {
-    data: studentPracticeSessions,
-    isLoading: isGetStudentPracticeSessionsLoading,
-    isError: isGetStudentPracticeSessionsError,
-    error: getStudentPracticeSessionsError,
-  } = useGetStudentPracticeSessionsQuery(params.id);
-  // what to put in here?
+  useEffect(() => {
+    fetch(`http://localhost:3000/practice_sessions/students/${params.id}`).then(
+      (resp) => {
+        if (resp.ok) {
+          resp
+            .json()
+            .then((practiceSessions) =>
+              setPracticeSessionsForStudent(practiceSessions)
+            );
+        } else {
+          console.error(resp);
+        }
+      }
+    );
+  }, [selectionModel]);
 
-  console.log({ studentPracticeSessions });
+  // const {
+  //   data: practiceSessionsForStudent,
+  //   isLoading: isGetPracticeSessionsForStudentLoading,
+  //   isError: isGetPracticeSessionsForStudentError,
+  //   error: getPracticeSessionsForStudentError,
+  // } = useGetPracticeSessionsForStudentQuery(params.id);
+
+  // console.log({ isGetPracticeSessionsForStudentLoading });
+  // console.log({ isGetPracticeSessionsForStudentError });
+  // console.log({ params });
+
+  const [
+    deletePracticeSessions,
+    {
+      isError: isDeletePracticeSessionsError,
+      error: deletePracticeSessionsError,
+    },
+  ] = useDeletePracticeSessionsMutation();
+
+  console.log({ practiceSessionsForStudent });
   // fetch all practice sessions for a given student
   //    fetch the student using params
   //    fetch all practice sessions for that student using the id 'student/:student_id/practice_sessions' ??
@@ -42,14 +73,16 @@ const StudentDataTable = () => {
     },
   ];
 
-  const rows = studentPracticeSessions.map((practiceSession) => {
+  const rows = practiceSessionsForStudent.map((practiceSession) => {
     return {
       id: practiceSession.id,
       date: practiceSession.date,
+      // format this
       type: practiceSession.type,
       score: practiceSession.score,
       difficulty: practiceSession.average_difficulty_level_descriptor,
       notes: practiceSession.notes,
+      // add phonological process & target phoneme
     };
   });
 
@@ -57,8 +90,10 @@ const StudentDataTable = () => {
     if (selectionModel.length === 0) {
       return;
     } else {
-      debugger;
-      // iterate through array and make a delete request for each id in the array
+      deletePracticeSessions(selectionModel);
+      // make sure it's only deleting the associated records I want it to
+      setSelectionModel([]);
+      // make it re-render without a refresh
     }
   }
 

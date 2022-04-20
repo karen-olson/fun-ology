@@ -101,9 +101,8 @@ export const phonologyApi = createApi({
       query: () => "/practice_sessions/current",
       providesTags: ["Practice Session"],
     }),
-    getStudentPracticeSessions: builder.query({
-      query: (studentId) => `/students/${studentId}/practice_sessions`,
-      // providesTags: ["Practice Session"],
+    getPracticeSessionsForStudent: builder.query({
+      query: (id) => `/practice_sessions/students/${id}`,
     }),
     updatePracticeSession: builder.mutation({
       query: (updatedPracticeSession) => ({
@@ -112,6 +111,15 @@ export const phonologyApi = createApi({
         body: updatedPracticeSession,
       }),
       invalidatesTags: ["Practice Session"],
+    }),
+    deletePracticeSessions: builder.mutation({
+      // ids must be in an array
+      query: (ids) => ({
+        url: "/practice_sessions",
+        method: "DELETE",
+        body: ids,
+      }),
+      // invalidatesTags: ["Practice Session"],
     }),
     createPracticeSessionMinimalPair: builder.mutation({
       query: (newPracticeSessionMinimalPair) => ({
@@ -142,9 +150,11 @@ export const {
   useGetTargetPhonemeQuery,
 
   useCreatePracticeSessionMutation,
-  useCreatePracticeSessionMinimalPairMutation,
   useGetCurrentPracticeSessionQuery,
-  useGetStudentPracticeSessionsQuery,
+  useGetPracticeSessionsForStudentQuery,
   useUpdatePracticeSessionMutation,
   useCalculatePracticeSessionScoreMutation,
+  useDeletePracticeSessionsMutation,
+
+  useCreatePracticeSessionMinimalPairMutation,
 } = phonologyApi;
