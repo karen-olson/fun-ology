@@ -101,6 +101,10 @@ export const phonologyApi = createApi({
       query: () => "/practice_sessions/current",
       providesTags: ["Practice Session"],
     }),
+    getStudentPracticeSessions: builder.query({
+      query: (studentId) => `/students/${studentId}/practice_sessions`,
+      // providesTags: ["Practice Session"],
+    }),
     updatePracticeSession: builder.mutation({
       query: (updatedPracticeSession) => ({
         url: `/practice_sessions/${updatedPracticeSession.id}`,
@@ -140,6 +144,7 @@ export const {
   useCreatePracticeSessionMutation,
   useCreatePracticeSessionMinimalPairMutation,
   useGetCurrentPracticeSessionQuery,
+  useGetStudentPracticeSessionsQuery,
   useUpdatePracticeSessionMutation,
   useCalculatePracticeSessionScoreMutation,
 } = phonologyApi;

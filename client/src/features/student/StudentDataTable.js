@@ -1,29 +1,43 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import { IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useGetStudentPracticeSessionsQuery } from "../../services/phonology";
 
 const StudentDataTable = () => {
   const [selectionModel, setSelectionModel] = useState([]);
 
+  const params = useParams();
+
+  const {
+    data: studentPracticeSessions,
+    isLoading: isGetStudentPracticeSessionsLoading,
+    isError: isGetStudentPracticeSessionsError,
+    error: getStudentPracticeSessionsError,
+  } = useGetStudentPracticeSessionsQuery(params.id);
+  // what to put in here?
+
+  console.log({ studentPracticeSessions });
+  // fetch all practice sessions for a given student
+  //    fetch the student using params
+  //    fetch all practice sessions for that student using the id 'student/:student_id/practice_sessions' ??
+  //    how to do that restfully?
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "firstName", headerName: "First name", width: 130 },
-    { field: "lastName", headerName: "Last name", width: 130 },
+    { field: "date", headerName: "Date", width: 130 },
+    { field: "score", headerName: "Score", type: "number", width: 90 },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      width: 90,
+      field: "difficulty",
+      headerName: "Difficulty",
+      width: 130,
     },
     {
-      field: "fullName",
-      headerName: "Full name",
-      description: "This column has a value getter and is not sortable.",
+      field: "notes",
+      headerName: "Notes",
       sortable: false,
-      width: 160,
-      valueGetter: (params) =>
-        `${params.row.firstName || ""} ${params.row.lastName || ""}`,
+      width: 200,
     },
   ];
 
@@ -38,6 +52,19 @@ const StudentDataTable = () => {
     { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
     { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
   ];
+
+  // const rows = practiceSessions.map((practiceSession) => {
+  //   // make helper function to calculate difficulty level
+  //   const difficultyLevel = "easy";
+
+  //   return {
+  //     id: practiceSession.id,
+  //     date: practiceSession.date,
+  //     score: practiceSession.score,
+  //     difficulty: difficultyLevel,
+  //     notes: practiceSession.notes,
+  //   };
+  // });
 
   function handleDeletePracticeSessionClick() {
     if (selectionModel.length === 0) {
