@@ -27,6 +27,18 @@ class StudentsController < ApplicationController
         render json: student, status: :ok
     end
 
+    def practice_sessions
+        student = Student.find(params[:id])
+
+        practice_session_events = student.practice_sessions.order("date")
+
+        if practice_session_events
+            render json: practice_session_events, status: :ok
+        else 
+            render json: {error: "Practice sessions not found"}, status: :not_found
+        end
+    end
+
     private 
 
     def student_params
