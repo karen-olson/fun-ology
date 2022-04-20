@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
 
   get "/students/alphabetical", to: "students#alphabetical_index"
-  get "/students/:id/practice_sessions", to: "students#practice_sessions"
-
+  
+  get "/practice_sessions/students/:id", to: "practice_sessions#practice_sessions_for_student"
   get "/practice_sessions/current", to: "practice_sessions#show_current_practice_session"
   patch "/practice_sessions/:id/calculate_score", to: "practice_sessions#calculate_score"
+  delete "/practice_sessions", to: "practice_sessions#destroy_multiple_practice_sessions"
 
   post "/signup/speech_therapist", to: "speech_therapists#create"
   post "/signup/student", to: "students#create"

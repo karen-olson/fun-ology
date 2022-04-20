@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-    skip_before_action :authorize, only: :create
+    skip_before_action :authorize, only: [:create, :show]
 
     def index 
         students = Student.all
@@ -12,6 +12,7 @@ class StudentsController < ApplicationController
     end
 
     def show
+        # byebug
         student = Student.find(params[:id])
         render json: student
     end
@@ -25,18 +26,6 @@ class StudentsController < ApplicationController
         student = Student.find(params[:id])
         student.update!(student_params)
         render json: student, status: :ok
-    end
-
-    def practice_sessions
-        student = Student.find(params[:id])
-
-        practice_session_events = student.practice_sessions.order("date")
-
-        if practice_session_events
-            render json: practice_session_events, status: :ok
-        else 
-            render json: {error: "Practice sessions not found"}, status: :not_found
-        end
     end
 
     private 
