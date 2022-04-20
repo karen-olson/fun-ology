@@ -27,6 +27,7 @@ const StudentDataTable = () => {
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "date", headerName: "Date", width: 130 },
+    { field: "type", headerName: "Type", width: 130 },
     { field: "score", headerName: "Score", type: "number", width: 90 },
     {
       field: "difficulty",
@@ -41,30 +42,16 @@ const StudentDataTable = () => {
     },
   ];
 
-  const rows = [
-    { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-    { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-    { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-    { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-    { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-    { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-    { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-    { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-    { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-  ];
-
-  // const rows = practiceSessions.map((practiceSession) => {
-  //   // make helper function to calculate difficulty level
-  //   const difficultyLevel = "easy";
-
-  //   return {
-  //     id: practiceSession.id,
-  //     date: practiceSession.date,
-  //     score: practiceSession.score,
-  //     difficulty: difficultyLevel,
-  //     notes: practiceSession.notes,
-  //   };
-  // });
+  const rows = studentPracticeSessions.map((practiceSession) => {
+    return {
+      id: practiceSession.id,
+      date: practiceSession.date,
+      type: practiceSession.type,
+      score: practiceSession.score,
+      difficulty: practiceSession.average_difficulty_level_descriptor,
+      notes: practiceSession.notes,
+    };
+  });
 
   function handleDeletePracticeSessionClick() {
     if (selectionModel.length === 0) {
