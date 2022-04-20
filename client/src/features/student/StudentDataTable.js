@@ -76,8 +76,7 @@ const StudentDataTable = () => {
   const rows = practiceSessionsForStudent.map((practiceSession) => {
     return {
       id: practiceSession.id,
-      date: practiceSession.date,
-      // format this
+      date: practiceSession.date.slice(0, 10),
       type: practiceSession.type,
       score: practiceSession.score,
       difficulty: practiceSession.average_difficulty_level_descriptor,
