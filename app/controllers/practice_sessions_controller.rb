@@ -1,5 +1,4 @@
 class PracticeSessionsController < ApplicationController
-    # remove!!
     skip_before_action :authorize
 
     def create
@@ -20,7 +19,7 @@ class PracticeSessionsController < ApplicationController
         render json: practice_session, status: :ok
     end
 
-    def get_current_practice_session
+    def show_current_practice_session
         current_practice_session = PracticeSession.where("current = 'true'")[0]
     
         if current_practice_session

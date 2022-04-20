@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "/students/alphabetical", to: "students#alphabetical_index"
   get "/students/:id/practice_sessions", to: "students#practice_sessions"
 
-  get "/practice_sessions/current", to: "practice_sessions#get_current_practice_session"
+  get "/practice_sessions/current", to: "practice_sessions#show_current_practice_session"
   patch "/practice_sessions/:id/calculate_score", to: "practice_sessions#calculate_score"
 
   post "/signup/speech_therapist", to: "speech_therapists#create"
