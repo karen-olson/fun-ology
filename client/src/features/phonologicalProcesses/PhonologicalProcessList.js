@@ -12,8 +12,6 @@ const PhonologicalProcessList = () => {
     error,
   } = useGetPhonologicalProcessesQuery();
 
-  console.log(phonologicalProcesses);
-
   let content;
 
   if (isLoading) {
@@ -25,14 +23,12 @@ const PhonologicalProcessList = () => {
   } else {
     const phonologicalProcessCards = phonologicalProcesses.map(
       (phonologicalProcess) => (
-        <Grid item xs={4}>
-          <PhonologicalProcessCard
-            phonologicalProcess={phonologicalProcess}
-            key={phonologicalProcess.id}
-          />
+        <Grid item xs={4} key={phonologicalProcess.id}>
+          <PhonologicalProcessCard phonologicalProcess={phonologicalProcess} />
         </Grid>
       )
     );
+
     content = (
       <Grid container columns={1} rowSpacing={4}>
         {phonologicalProcessCards}

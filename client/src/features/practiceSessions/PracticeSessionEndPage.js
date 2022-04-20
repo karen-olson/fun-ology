@@ -24,8 +24,8 @@ const PracticeSessionEndPage = () => {
   const {
     data: currentPracticeSession,
     isLoading: isCurrentPracticeSessionLoading,
-    isError: isCurrentPracticeSessionError,
-    error: currentPracticeSessionError,
+    // isError: isCurrentPracticeSessionError,
+    // error: currentPracticeSessionError,
   } = useGetCurrentPracticeSessionQuery();
 
   console.log({ currentPracticeSession });
@@ -45,7 +45,10 @@ const PracticeSessionEndPage = () => {
 
   const [
     updatePracticeSession,
-    { isUpdatePracticeSessionError, updatePracticeSessionError },
+    // {
+    //   isUpdatePracticeSessionError,
+    //   updatePracticeSessionError
+    // },
   ] = useUpdatePracticeSessionMutation();
 
   useEffect(() => {

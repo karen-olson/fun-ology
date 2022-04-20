@@ -1,10 +1,4 @@
-import {
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-  CardActionArea,
-} from "@mui/material";
+import { Typography, Card, CardContent, CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Loading from "../../components/Loading";
 

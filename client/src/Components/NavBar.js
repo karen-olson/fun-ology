@@ -7,8 +7,10 @@ import { usePostLogoutMutation } from "../services/phonology";
 const NavBar = () => {
   const navigate = useNavigate();
 
-  const [postLogout, { isLoading, isFetching, isError, error }] =
-    usePostLogoutMutation();
+  const [
+    postLogout,
+    // { isLoading, isFetching, isError, error }
+  ] = usePostLogoutMutation();
 
   function handleLogoutClick(e) {
     postLogout();

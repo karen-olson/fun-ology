@@ -9,7 +9,7 @@ import { Container, Box, Button, IconButton, Grid } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+// import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import MinimalPair from "../minimalPairs/MinimalPair";
 import Loading from "../../components/Loading";
 

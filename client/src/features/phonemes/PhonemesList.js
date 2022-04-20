@@ -1,5 +1,4 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetPhonologicalProcessesQuery } from "../../services/phonology";
 import { Container, Box, Typography, Grid } from "@mui/material";
 import PhonemeCard from "./PhonemeCard";
@@ -33,9 +32,8 @@ const PhonemesList = () => {
     ).target_phonemes;
 
     const phonemeCards = phonemes.map((phoneme) => (
-      <Grid item xs={4}>
+      <Grid item xs={4} key={phoneme.id}>
         <PhonemeCard
-          key={phoneme.id}
           phonologicalProcessName={phonologicalProcessName}
           phoneme={phoneme}
         />
