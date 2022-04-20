@@ -8,7 +8,7 @@ export const phonologyApi = createApi({
     // Add this line for auth to work
     credentials: "include",
   }),
-  tagTypes: ["Current User"],
+  tagTypes: ["Current User", "Student", "Practice Session"],
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
       query: () => "/me",
@@ -41,12 +41,15 @@ export const phonologyApi = createApi({
     }),
     getStudents: builder.query({
       query: () => "/students",
+      providesTags: ["Student"],
     }),
     getAlphabetizedStudents: builder.query({
       query: () => "/students/alphabetical",
+      providesTags: ["Student"],
     }),
     getStudent: builder.query({
       query: (id) => `/students/${id}`,
+      providesTags: ["Student"],
     }),
     createNewStudent: builder.mutation({
       query: (newStudent) => ({
@@ -54,6 +57,7 @@ export const phonologyApi = createApi({
         method: "POST",
         body: newStudent,
       }),
+      invalidatesTags: ["Student"],
     }),
     editStudent: builder.mutation({
       query: (updatedStudent) => ({
@@ -61,6 +65,7 @@ export const phonologyApi = createApi({
         method: "PATCH",
         body: updatedStudent,
       }),
+      invalidatesTags: ["Student"],
     }),
     getPhonologicalProcesses: builder.query({
       query: () => "/phonological_processes",
@@ -90,22 +95,25 @@ export const phonologyApi = createApi({
         method: "POST",
         body: { ...newPracticeSession, current: true },
       }),
-    }),
-    createPracticeSessionMinimalPair: builder.mutation({
-      query: (newPracticeSessionMinimalPair) => ({
-        url: "/practice_session_minimal_pairs",
-        method: "POST",
-        body: newPracticeSessionMinimalPair,
-      }),
+      invalidatesTags: ["Practice Session"],
     }),
     getCurrentPracticeSession: builder.query({
       query: () => "/practice_sessions/current",
+      providesTags: ["Practice Session"],
     }),
     updatePracticeSession: builder.mutation({
       query: (updatedPracticeSession) => ({
         url: `/practice_sessions/${updatedPracticeSession.id}`,
         method: "PATCH",
         body: updatedPracticeSession,
+      }),
+      invalidatesTags: ["Practice Session"],
+    }),
+    createPracticeSessionMinimalPair: builder.mutation({
+      query: (newPracticeSessionMinimalPair) => ({
+        url: "/practice_session_minimal_pairs",
+        method: "POST",
+        body: newPracticeSessionMinimalPair,
       }),
     }),
   }),
