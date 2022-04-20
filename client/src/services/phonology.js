@@ -103,6 +103,7 @@ export const phonologyApi = createApi({
     }),
     getPracticeSessionsForStudent: builder.query({
       query: (id) => `/practice_sessions/students/${id}`,
+      providesTags: ["Practice Session"],
     }),
     updatePracticeSession: builder.mutation({
       query: (updatedPracticeSession) => ({
@@ -119,7 +120,7 @@ export const phonologyApi = createApi({
         method: "DELETE",
         body: ids,
       }),
-      // invalidatesTags: ["Practice Session"],
+      invalidatesTags: ["Practice Session"],
     }),
     createPracticeSessionMinimalPair: builder.mutation({
       query: (newPracticeSessionMinimalPair) => ({
