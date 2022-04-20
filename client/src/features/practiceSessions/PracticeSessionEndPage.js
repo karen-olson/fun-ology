@@ -9,6 +9,7 @@ import {
   TextField,
 } from "@mui/material";
 import DonePageGraphic from "../../DonePageGraphic.png";
+import DonePageGraphic2 from "../../DonePageGraphic2.png";
 import {
   useGetCurrentPracticeSessionQuery,
   useUpdatePracticeSessionMutation,
@@ -26,6 +27,8 @@ const PracticeSessionEndPage = () => {
     isError: isCurrentPracticeSessionError,
     error: currentPracticeSessionError,
   } = useGetCurrentPracticeSessionQuery();
+
+  console.log({ currentPracticeSession });
 
   const [practiceSessionData, setPracticeSessionData] = useState({
     id: currentPracticeSession.id,
@@ -54,11 +57,9 @@ const PracticeSessionEndPage = () => {
     }).then((resp) => {
       if (resp.ok) {
         resp.json().then((updatedPracticeSession) => {
-          const difficulty = convertAverageDifficultyLevelFromNumberToWord(
-            updatedPracticeSession.average_difficulty_level
+          setDifficultyDescriptor(
+            updatedPracticeSession.average_difficulty_level_descriptor
           );
-
-          setDifficultyDescriptor(difficulty);
 
           setPracticeSessionData((practiceSessionData) => ({
             ...practiceSessionData,
@@ -73,7 +74,7 @@ const PracticeSessionEndPage = () => {
     });
   }, [currentPracticeSession]);
 
-  console.log({ practiceSessionData });
+  console.log({ difficultyDescriptor });
 
   function handleShowNotesClick() {
     setShowNotes(!showNotes);
@@ -90,19 +91,6 @@ const PracticeSessionEndPage = () => {
       current: false,
     });
     navigate("/phonological_processes");
-  }
-
-  function convertAverageDifficultyLevelFromNumberToWord(difficultyLevel) {
-    switch (difficultyLevel) {
-      case 1:
-        return "easy";
-      case 2:
-        return "medium";
-      case 3:
-        return "hard";
-      default:
-        return "";
-    }
   }
 
   let showNotesButton;
@@ -191,7 +179,12 @@ const PracticeSessionEndPage = () => {
           >
             <img
               height="200px"
-              src={DonePageGraphic}
+              src={
+                difficultyDescriptor === "hard" ||
+                practiceSessionData.score <= 50
+                  ? DonePageGraphic2
+                  : DonePageGraphic
+              }
               alt="Clipart of striped cat jumping and saying hooray."
               style={{
                 borderWidth: "1px",
@@ -213,7 +206,9 @@ const PracticeSessionEndPage = () => {
             color="primary.dark"
             fontFamily="monospace"
           >
-            Keep working hard!
+            {difficultyDescriptor === "hard" || practiceSessionData.score <= 50
+              ? "Try a new strategy next time!"
+              : "Keep working hard!"}
           </Typography>
           <Box m={2}>{showNotesButton}</Box>
           <Box m={2}>{notesForm}</Box>
