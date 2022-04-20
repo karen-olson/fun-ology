@@ -32,3 +32,4 @@
 
 # Ignore node modules and npm's logs
 node_modules
+npm-debug.log
