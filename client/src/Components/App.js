@@ -17,7 +17,7 @@ import PracticeSessionPage from "../features/practiceSessions/PracticeSessionPag
 import PracticeSessionEndPage from "../features/practiceSessions/PracticeSessionEndPage";
 import Loading from "./Loading";
 
-export default function App() {
+function App() {
   const { data: currentUser, isLoading, error } = useGetCurrentUserQuery();
 
   const unauthorizedError = error ? error.status === 401 : null;
@@ -74,3 +74,5 @@ export default function App() {
     );
   }
 }
+
+export default App;
