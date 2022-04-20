@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :minimal_pairs, only: :index
   resources :target_phonemes, only: [:index, :show]
   resources :phonological_processes, only: :index
-  resources :students, only: [:index, :show, :create]
+  resources :students, only: [:index, :show, :create, :update]
   resources :speech_therapists
   resources :users
   

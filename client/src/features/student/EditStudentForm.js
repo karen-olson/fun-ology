@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -20,10 +20,12 @@ import {
   useGetSpeechTherapistsQuery,
   useGetAvatarsQuery,
   useGetStudentQuery,
+  useEditStudentMutation,
 } from "../../services/phonology";
 
 const EditStudentForm = () => {
   const params = useParams();
+  const navigate = useNavigate();
 
   const {
     data: student,
@@ -32,9 +34,7 @@ const EditStudentForm = () => {
     error: getStudentError,
   } = useGetStudentQuery(params.id);
 
-  const [selectedStudentAvatarId, setSelectedStudentAvatarId] = useState(
-    student.avatar.id
-  );
+  const [selectedStudentAvatarId, setSelectedStudentAvatarId] = useState(null);
 
   let defaultFormData;
 
@@ -46,19 +46,11 @@ const EditStudentForm = () => {
       email: "",
       speech_therapist_id: "",
       avatar_id: "",
+      password: "",
     };
   } else if (isGetStudentError) {
     defaultFormData = null;
     console.error(getStudentError);
-  } else {
-    defaultFormData = {
-      full_name: student.full_name,
-      date_of_birth: student.date_of_birth,
-      username: student.username,
-      email: student.email,
-      speech_therapist_id: student.speech_therapist_id,
-      avatar_id: student.avatar.id,
-    };
   }
 
   const [formData, setFormData] = useState(defaultFormData);
@@ -69,6 +61,27 @@ const EditStudentForm = () => {
     isError: isGetAvatarsError,
     error: getAvatarsError,
   } = useGetAvatarsQuery();
+
+  useEffect(() => {
+    if (student && student.avatar) {
+      setSelectedStudentAvatarId(student.avatar.id);
+
+      defaultFormData = {
+        id: student.id,
+        full_name: student.full_name,
+        date_of_birth: student.date_of_birth,
+        username: student.username,
+        email: student.email,
+        speech_therapist_id: student.speech_therapist_id,
+        avatar_id: student.avatar.id,
+        password: "",
+      };
+
+      setFormData(defaultFormData);
+    }
+  }, [student, avatars]);
+
+  console.log({ formData });
 
   let avatarElements;
 
@@ -146,10 +159,10 @@ const EditStudentForm = () => {
     });
   }
 
-  // const [
-  //   createNewStudent,
-  //   { isError: isCreateStudentError, error: createStudentError },
-  // ] = useCreateNewStudentMutation();
+  const [
+    editStudent,
+    { isError: isEditStudentError, error: editStudentError },
+  ] = useEditStudentMutation();
 
   function handleChange(event) {
     let updatedFormData;
@@ -184,26 +197,39 @@ const EditStudentForm = () => {
   function handleSubmit(e) {
     e.preventDefault();
 
-    // createNewStudent(formData)
-    // .unwrap()
-    // .then(() => navigate("/signup/confirmation"));
+    editStudent(formData)
+      .unwrap()
+      .then(() => navigate(`/students/${student.id}`));
 
     setSelectedStudentAvatarId(null);
   }
 
-  // let createStudentErrorDisplay;
+  let editStudentErrorDisplay;
 
-  // if (isCreateStudentError) {
-  //   createStudentErrorDisplay = createStudentError.data.errors.map(
-  //     (createStudentError) => (
-  //       <Typography key={createStudentError}>{createStudentError}</Typography>
-  //     )
-  //   );
-  // } else {
-  //   createStudentErrorDisplay = null;
-  // }
+  if (isEditStudentError) {
+    if (editStudentError.data.error) {
+      editStudentErrorDisplay = (
+        <>
+          <Typography key={editStudentError}>
+            {editStudentError.data.status}: {editStudentError.data.error}
+          </Typography>
+          <Typography>Exception: {editStudentError.data.exception}</Typography>
+        </>
+      );
+    } else if (editStudentError.data.errors) {
+      editStudentErrorDisplay = editStudentError.data.errors.map((error) => (
+        <Typography key={error}>{error}</Typography>
+      ));
+    } else {
+      editStudentErrorDisplay = null;
+    }
+  }
 
-  if (isGetSpeechTherapistsLoading || isGetStudentLoading) {
+  if (
+    isGetSpeechTherapistsLoading ||
+    isGetStudentLoading ||
+    isGetAvatarsLoading
+  ) {
     return <Loading />;
   } else {
     return (
@@ -309,12 +335,23 @@ const EditStudentForm = () => {
                   fullWidth
                 />
               </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="password"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  value={formData["password"]}
+                  onChange={handleChange}
+                  fullWidth
+                />
+              </Grid>
             </Grid>
             <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
               Submit
             </Button>
             <Typography sx={{ color: "#d36d3a", fontStyle: "italic" }}>
-              {/* {createStudentErrorDisplay} */}
+              {editStudentErrorDisplay}
             </Typography>
           </Box>
         </Box>
