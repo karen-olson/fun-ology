@@ -1,3 +1,32 @@
+# Fun-ology
+
+Fun-ology is a free, web-based flashcard application for speech therapists to use with students working on phonological process goals. The frontend was built with React and MUI, and the backend is a REST API built with Ruby on Rails and seeded with custom data. Images were purchased through a subscription to [lesson pics](https://lessonpix.com/logout.php).
+
+## Deployed Site
+
+See the [deployed site](https://fun-ology.herokuapp.com//), hosted on Heroku.
+
+## Packages
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Configuration was achieved using a React/Rails API template from Flatiron School.
+
+[MUI](https://mui.com/) was used for styling.
+
+## Installation Guide
+
+Fork and clone this repository. Once it has been cloned onto your local machine, open the project and run `bundle install` in the root directory to install all Ruby packages. Because there is a React app nested inside of the Rails app, run `cd client` and `npm install` to install the packages for the React app. Then, run `cd ..` to return to the project's root directory.
+
+To start the development server, run the following commands.
+
+In one terminal window, run `rails s` to start the Rails API server.
+In a separate terminal window, run `npm start --prefix client` to start the React app.
+
+Go to (http://localhost:4000/) to see the frontend view. Use a service like Postman to view and test the API endpoints (ex. GET (http://localhost:3000/videos)), or test the GET routes in the browser. Currently, the permissions are set so that you won't be authorized to access the endpoints unless you're logged in to the app. You can temporarily disable authorization by going to funology/app/controllers/concerns/application_controller.rb and commenting out (`before_action authorize`). Remember to reset authorization when you're done making changes to the backend!
+
+```
+
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
