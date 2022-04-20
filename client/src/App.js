@@ -1,21 +1,21 @@
-import { useGetCurrentUserQuery } from "../services/phonology";
+import { useGetCurrentUserQuery } from "./services/phonology";
 import { Routes, Route } from "react-router-dom";
-import NavBar from "./NavBar";
-import Home from "./Home";
-import LoginForm from "../features/logIn/LoginForm";
-import StudentSignUpForm from "../features/signUp/StudentSignUpForm";
-import SpeechTherapistSignUpForm from "../features/signUp/SpeechTherapistSignUpForm";
-import SignUpPage from "../features/signUp/SignUpPage";
-import SignUpConfirmation from "../features/signUp/SignUpConfirmation";
-import StudentsList from "../features/student/StudentsList";
-import StudentDataPage from "../features/student/StudentDataPage";
-import EditStudentForm from "../features/student/EditStudentForm";
-import PhonologicalProcessList from "../features/phonologicalProcesses/PhonologicalProcessList";
-import PhonemesList from "../features/phonemes/PhonemesList";
-import PracticeSessionStartPage from "../features/practiceSessions/PracticeSessionStartPage";
-import PracticeSessionPage from "../features/practiceSessions/PracticeSessionPage";
-import PracticeSessionEndPage from "../features/practiceSessions/PracticeSessionEndPage";
-import Loading from "./Loading";
+import NavBar from "./components/NavBar";
+import Home from "./components/Home";
+import LoginForm from "./features/logIn/LoginForm";
+import StudentSignUpForm from "./features/signUp/StudentSignUpForm";
+import SpeechTherapistSignUpForm from "./features/signUp/SpeechTherapistSignUpForm";
+import SignUpPage from "./features/signUp/SignUpPage";
+import SignUpConfirmation from "./features/signUp/SignUpConfirmation";
+import StudentsList from "./features/student/StudentsList";
+import StudentDataPage from "./features/student/StudentDataPage";
+import EditStudentForm from "./features/student/EditStudentForm";
+import PhonologicalProcessList from "./features/phonologicalProcesses/PhonologicalProcessList";
+import PhonemesList from "./features/phonemes/PhonemesList";
+import PracticeSessionStartPage from "./features/practiceSessions/PracticeSessionStartPage";
+import PracticeSessionPage from "./features/practiceSessions/PracticeSessionPage";
+import PracticeSessionEndPage from "./features/practiceSessions/PracticeSessionEndPage";
+import Loading from "./components/Loading";
 
 function App() {
   const { data: currentUser, isLoading, error } = useGetCurrentUserQuery();
