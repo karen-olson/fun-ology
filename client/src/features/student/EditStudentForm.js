@@ -46,7 +46,6 @@ const EditStudentForm = () => {
       email: "",
       speech_therapist_id: "",
       avatar_id: "",
-      password: "",
     };
   } else if (isGetStudentError) {
     defaultFormData = null;
@@ -74,7 +73,6 @@ const EditStudentForm = () => {
         email: student.email,
         speech_therapist_id: student.speech_therapist_id,
         avatar_id: student.avatar.id,
-        password: "",
       };
 
       setFormData(defaultFormData);
@@ -331,17 +329,6 @@ const EditStudentForm = () => {
                   label="Username"
                   type="text"
                   value={formData["username"]}
-                  onChange={handleChange}
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="password"
-                  name="password"
-                  label="Password"
-                  type="password"
-                  value={formData["password"]}
                   onChange={handleChange}
                   fullWidth
                 />
